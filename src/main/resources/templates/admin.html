@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>
+            Tài khoản
+        </title>
+        <link rel="icon" type="image/x-icon" th:href="@{/assets/img/sport_icon.png}">
+        <meta charset="utf-8">
+        <link rel="stylesheet" th:href="@{/assets/css/userStyles.css}">
+        <link rel="stylesheet" th:href="@{assets/font/themify-icons/themify-icons.css}">
+</head>
+<body>
+<div id="header">
+    <ul id="nav">
+        <li><a th:href="@{/admin}"><img th:src="@{/assets/img/sport_icon.png}" alt="Home Page" style="width:30px;height:30px; margin-top: 10px;"></a>
+        </li>
+        <li><a th:href="@{/admin/members}">Người dùng</a></li>
+        <li><a th:href="@{/admin/rooms}">Sân</a></li>
+        <li><a th:href="@{/admin/bookings}">Thanh toán</a></li>
+        <li><a th:href="@{/myInfo}">Tài khoản</a></li>
+    </ul>
+</div>
+    <div class="profile-container">
+        <div class="profile-left">
+            <img src="/assets/img/profile.jpg" alt="User Picture" class="user-picture">
+            <h2 class="user-name">Tên tài khoản : </h2><h2 class="user-name" th:text="${member.username}"></h2>
+        </div>
+        <div class="profile-right">
+            <table class="user-info">
+                <tr>
+                    <th>Email:</th>
+                    <td th:text="${member.email}"></td>
+                </tr>
+                <tr>
+                    <th>Thành viên từ:</th>
+                    <td th:text="${member.memberSince}"></td>
+                </tr>
+            </table>
+            <div class="logout-button-container">
+                <a th:href="@{/logout}" method="post">
+                    <button type="button" class="profile-button" id="confirm-logout-btn" style="margin: 0 10px;">Đăng xuất</button>
+                </a>
+            </div>
+        </div>
+    </div>
+    <script th:src="@{/jsFile/userScript.js}"></script>
+</body>

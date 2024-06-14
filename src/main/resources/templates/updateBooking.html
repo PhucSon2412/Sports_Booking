@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin thuê sân</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/assets/img/sport_icon.png}">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 1.5em;
+        }
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            color: #555;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px -11px 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            background-color: #FF4B2B;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #a64728;
+        }
+        #header {
+    height: 60px;
+    background-color: black;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
+#nav {
+    display: flex;
+    align-items: center;
+    /*justify-content: space-between;*/
+    padding: 0 20px;
+    height: 100%;
+    list-style-type: none;
+    margin: 0;
+}
+
+#nav li {
+    display: inline-block;
+}
+
+#nav li a {
+    color: aliceblue;
+    text-decoration: none;
+    line-height: 60px;
+    padding: 0 24px;
+    display: inline-block;
+}
+
+#nav li:hover a {
+    color: black;
+    background-color: white;
+}
+a {
+    color: #333;
+    font-size: 16px;
+    text-decoration: none;
+    margin: 15px 0;
+}
+    </style>
+</head>
+<body>
+    <div id="header">
+        <ul id="nav">
+            <li><a th:href="@{/admin}"><img th:src="@{/assets/img/sport_icon.png}" alt="Home Page" style="width:30px;height:30px; margin-top: 10px;"></a>
+            </li>
+            <li><a th:href="@{/admin/members}">Người dùng</a></li>
+            <li><a th:href="@{/admin/rooms}">Sân</a></li>
+            <li><a th:href="@{/admin/bookings}">Thanh toán</a></li>
+            <li><a th:href="@{/logout}" method="post">Đăng xuất</a></li>
+        </ul>
+    </div>
+    <div id="header2">
+        <ul id="nav2">
+            <li><a th:href="@{/myInfo}">Tài khoản</a></li>
+        </ul>
+
+    </div>
+    <div class="container" >
+        <h1 style="margin-top: 50px;">Thông tin thuê sân</h1>
+
+        <div class="profile-right">
+            <table class="user-info">
+                <tr>
+                    <th>RoomID:</th>
+                    <td th:text="${bookingUpdate.roomid}"></td>
+                </tr>
+                <tr>
+                    <th>MemberID:</th>
+                    <td th:text="${bookingUpdate.memberid}"></td>
+                </tr>
+                <tr>
+                    <th>BookedDate:</th>
+                    <td th:text="${bookingUpdate.bookedDate}"></td>
+                </tr>
+                <tr>
+                    <th>BookedTime:</th>
+                    <td th:text="${bookingUpdate.bookedTime}"></td>
+                </tr>
+                <tr>
+                    <th>ExpiredTime:</th>
+                    <td th:text="${bookingUpdate.expiredTime}"></td>
+                </tr>
+                <tr>
+                    <th>DatetimeOfBooking:</th>
+                    <td th:text="${bookingUpdate.datetimeOfBooking}"></td>
+                </tr>
+            </table>
+        </div>
+
+
+        <form method="post" action="#" th:action="@{/admin/bookings/realupdate}" th:object="${bookingUpdate}">
+            <label for="roomType">Trạng thái thanh toán :</label>
+            <select id="roomType" th:field="*{paymentStatus}">
+                <option value="Paid">Đã trả</option>
+                <option value="Cancelled">Bị hủy</option>
+            </select>
+            <input type="submit" value="Xác nhận">
+        </form>
+    </div>
+</body>
+</html>

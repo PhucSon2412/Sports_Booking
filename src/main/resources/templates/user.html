@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>
+            Tài khoản
+        </title>
+        <link rel="icon" type="image/x-icon" th:href="@{/assets/img/sport_icon.png}">
+        <meta charset="utf-8">
+        <link rel="stylesheet" th:href="@{/assets/css/userStyles.css}">
+        <link rel="stylesheet" th:href="@{assets/font/themify-icons/themify-icons.css}">
+</head>
+<body>
+<div id="header">
+    <ul id="nav">
+        <li><a th:href="@{/}"><img th:src="@{/assets/img/sport_icon.png}" alt="Home Page" style="width:30px;height:30px; margin-top: 10px;"></a>
+        </li>
+        <li><a th:href="@{/}">Trang chủ</a></li>
+            <li><a th:href="@{/user/create}">Đặt sân</a></li>
+            <li><a th:href="@{/myInfo}">Tài khoản</a></li>
+        </th:block>
+    </ul>
+</div>
+
+    <div class="profile-container">
+        <div class="profile-left">
+            <img src="/assets/img/profile.jpg" alt="User Picture" class="user-picture">
+            <h2 class="user-name">Tên tài khoản : </h2><h2 class="user-name" th:text="${member.username}"></h2>
+        </div>
+        <div class="profile-right">
+            <table class="user-info">
+                <tr>
+                    <th>MemberID:</th>
+                    <td th:text="${member.id}"></td>
+                </tr>
+                <tr>
+                    <th>Email:</th>
+                    <td th:text="${member.email}"></td>
+                </tr>
+                <tr>
+                    <th>Thành viên từ:</th>
+                    <td th:text="${member.memberSince}"></td>
+                </tr>
+                <tr>
+                    <th>Cần thanh toán:</th>
+                    <td th:text="${#numbers.formatDecimal(member.paymentDue, 1, 2)}"></td>
+                </tr>
+                <tr>
+                    <th>Tổng số tiền đã thanh toán:</th>
+                    <td th:text="${#numbers.formatDecimal(member.totalPaid, 1, 2)}"></td>
+                </tr>
+                <tr>
+                    <th>Hạng:</th>
+                    <td th:text="${member.rank}"></td>
+                </tr>
+                <tr>
+                    <th>Số lần hủy cho phép:</th>
+                    <td th:text="${member.penaltyExemption}"></td>
+                </tr>
+            </table>
+            <div class="button-container">
+                <button class="profile-button" id="view-bookings-btn">Sân đã đặt</button>
+                <button class="profile-button" id="view-bills-btn">Thông tin thanh toán</button>
+                <button class="profile-button" id="change-info-btn">Thay đổi thông tin</button>
+                <button class="profile-button" id="logout-btn">Đăng xuất</button>
+            </div>
+        </div>
+    </div>
+    <div id="change-info-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-change-info">&times;</span>
+            <h2>Thay đổi thông tin</h2>
+            <form action="#" method="post" th:action="@{/user/update}" th:object="${updateMember}">
+
+                <label for="username">Tên người dùng:</label>
+                <input type="text" id="username" name="username" th:field="*{username}"><br><br>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" th:field="*{email}"><br><br>
+                <label for="password">Mật khẩu:</label>
+                <input type="password" id="password" name="password" th:field="*{password}"><br><br>
+                <button type="submit" class="profile-button">Confirm</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="view-bills-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-view-bills">&times;</span>
+            <h2>Thông tin thanh toán</h2>
+
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Loại phòng</th>
+                    <th>Ngày thuê</th>
+                    <th>Giờ thuê</th>
+                    <th>Giờ trả</th>
+                    <th>Số tiền cần thanh toán</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item,loop: ${notpaid}">
+                    <td th:text="${roomType.get(loop.index)}"></td>
+                    <td th:text="${item.bookedDate}"></td>
+                    <td th:text="${item.bookedTime}"></td>
+                    <td th:text="${item.expiredTime}"></td>
+                    <td th:text="${#numbers.formatDecimal(item.paymentDue, 1, 2)}"></td>
+                    <td th:if="${cancelable.get(loop.index)}">
+                        <form action="#"  th:action="@{/user/cancel(id=${item.id})}" method="post" >
+                            <input type="hidden" name="_method" value="delete" />
+                            <button type="submit">Cancel</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div th:text="${#numbers.formatDecimal(paymentDue, 1, 2)}">
+                Chi phí phát sinh :
+            </div>
+
+        </div>
+    </div>
+
+    <div id="logout-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-logout">&times;</span>
+            <h2>Đăng xuất</h2>
+            <p>Bạn có muốn đăng xuất không?</p>
+            <div class="logout-button-container">
+                <a th:href="@{/logout}" method="post">
+                    <button type="button" class="profile-button" id="confirm-logout-btn" style="margin: 0 10px;">Xác nhận</button>
+                </a>
+            </div>
+        </div>
+    </div>
+        <div id="view-bookings-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-view-bookings">&times;</span>
+            <h2>Sân đã đặt</h2>
+
+
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Loại phòng</th>
+                    <th>Ngày thuê</th>
+                    <th>Giờ thuê</th>
+                    <th>Giờ trả</th>
+                    <th>Trạng thái thanh toán</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item,loop: ${bookings}">
+                    <td th:text="${roomTypeAll.get(loop.index)}"></td>
+                    <td th:text="${item.bookedDate}"></td>
+                    <td th:text="${item.bookedTime}"></td>
+                    <td th:text="${item.expiredTime}"></td>
+                    <td th:text="${item.paymentStatus}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script th:src="@{/jsFile/userScript.js}"></script>
+</body>

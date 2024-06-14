@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" type="image/x-icon" href="/assets/img/sport_icon.png">
+    <meta charset="utf-8">
+    <link rel="stylesheet" th:href="@{/assets/css/serviceStyles.css}">
+    <link rel="stylesheet" th:href="@{/assets/font/themify-icons/themify-icons.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/footer.css}">
+</head>
+<body>
+    <div id="main">
+    <div id="header">
+      <ul id="nav">
+        <li><a th:href="@{/}"><img th:src="@{/assets/img/sport_icon.png}" alt="Home Page" style="width:30px;height:30px; margin-top: 10px;"></a>
+        </li>
+        <li><a th:href="@{/}">Trang chủ</a></li>
+        <th:block th:if="${member == null}">
+          <li><a th:href="@{/loginOrRegister}">Đăng ký / Đăng nhập</a></li>
+        </th:block>
+        <th:block th:if="${member != null}">
+          <li><a th:href="@{/user/create}">Đặt sân</a></li>
+          <li><a th:href="@{/myInfo}">Tài khoản</a></li>
+        </th:block>
+      </ul>
+    </div>
+    
+<h2>Vertical Tabs</h2>
+
+<div class="tab">
+  <button class="tablinks" onclick="openCity(event, 'Rule')" id="defaultOpen">Quy định</button>
+  <button class="tablinks" onclick="openCity(event, 'Discount')">Ưu đãi</button>
+  <button class="tablinks" onclick="openCity(event, 'RPrice')">Bảng giá</button>
+  <button class="tablinks" onclick="openCity(event, 'Member')">Hội viên</button>
+  <button class="tablinks" onclick="openCity(event, 'Contact')">Liên hệ</button>
+</div>
+
+<div id="Rule" class="tabcontent">
+  <h3>Những quy định riêng người thuê cần tuân thủ</h3>
+  <li>Khách hàng cần đặt và trả sân trong cùng ngày</li>
+  <li>Việc hủy sân đã đặt là <b>miễn phí</b>.<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tuy nhiên nếu hủy <b>3 lần </b>(hoặc hơn) liên tiếp sẽ phải chịu <mark>phí phát sinh 200.000 VND</mark></li>
+  <li>Khách hàng <b>không thể hủy sân</b> đã đặt trước thời điểm thuê sân 2 ngày</li>
+</div>
+
+<div id="Discount" class="tabcontent">
+  <h3>Ưu đãi đặc biệt dành cho khách hàng mới</h3>
+  <p>Khách hàng lần đầu thuê sân tại 4Group sẽ nhận được mã giảm giá 20%</p>
+  <h3>Đặc quyền dành cho hội viên</h3>
+  <p>Tùy theo hạng hội viên, những ưu đãi sẽ khác nhau. Xem ngay trong phần Hội viên</p>
+  <h3>Giảm giá theo số giờ đặt sân</h3>
+  <p>Đặt sân càng nhiều, trả phí càng ít. Chi tiết xem trong phần Bảng giá<br>
+    </p>
+</div>
+
+<div id="RPrice" class="tabcontent">
+  <h3>Bảng giá</h3>
+  <p>Bảng giá thuê sân theo giờ áp dụng cho hội viên thường (tính bằng VNĐ)<br><table class="table-border">
+    <tr>
+      <th>Số giờ thuê (tiếng)</th>
+      <th>Sân cầu lông</th>
+      <th>Sân bắn cung</th>
+      <th>Sân tennis</th>
+    </tr>
+    <tr>
+      <td>2-4 giờ</td>
+      <td>100.000</td>
+      <td>150.000</td>
+      <td>180.000</td>
+    </tr>
+    <tr>
+      <td>4-6 giờ</td>
+      <td>93.000</td>
+      <td>139.500</td>
+      <td>167.400</td>
+    </tr>
+    <tr>
+      <td>Hơn 6 giờ</td>
+      <td>90.000</td>
+      <td>135.000</td>
+      <td>162.000</td>
+    </tr>
+  </table></p>
+</div>
+<div id="Member" class="tabcontent">
+  <h3>Hội viên 4Group</h3>
+  <p>Trở thành hội viên của trung tâm thể thao 4Group, bạn sẽ nhận được những ưu đãi sau:<br>
+    <div class="columns">
+      <ul class="price">
+        <li class="Mheader" style="background-image: url('https://img.freepik.com/premium-photo/silver-texture-high-quality_670382-120224.jpg');">Hạng Bạc</li>
+        <li class="grey">-5%/hóa đơn</li>
+        <li>Đạt được khi tổng số tiền đã đặt > 1,5 triệu đồng</li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+    
+    <div class="columns">
+      <ul class="price">
+        <li class="Mheader" style="background-image: url('https://t3.ftcdn.net/jpg/04/26/24/34/360_F_426243434_0ZePCOiqcz6W7TiCId2z24dv32ijEja4.jpg')">Hạng Vàng</li>
+        <li class="grey">-8%/hóa đơn</li>
+        <li>Đạt được khi tổng số tiền đã đặt > 3 triệu đồng</li>
+        <li>Được hủy sân 4 lần <br>liên tiếp miễn phí</li>
+        <li></li>
+      </ul>
+    </div>
+    
+    <div class="columns">
+      <ul class="price">
+        <li class="Mheader" style="background-image: url('https://img.staticmb.com/mbcontent/images/crop/uploads/2022/12/diamond-wallpaper_0_1200.jpg');">Hạng Kim Cương</li>
+        <li class="grey">-12%/hóa đơn</li>
+        <li>Đạt được khi tổng số tiền đã đặt > 5 triệu đồng</li>
+        <li>Được hủy sân 4 lần <br>liên tiếp miễn phí</li>
+        <li>Cho phép hủy sân trước thời điểm đã book 1 ngày</li>
+      </ul>
+    </div>
+    </p>
+</div>
+<div id="Contact" class="tabcontent">
+  <h3>Liên hệ</h3>
+  <p>Nếu bạn có bất kì thắc mắc nào, vui lòng liên hệ qua số điện thoại <a href="tel:+0858201662">+858201662</a><br>
+  hoặc qua mail sau: <a href="mailto:sport4Group@gmail.com">sport4Group@gmail.com</a>
+</p>
+</div>
+
+
+   
+</body>
+<script th:src="@{/jsFile/service.js}"></script>
+</html> 
+

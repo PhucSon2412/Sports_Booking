@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin thuê sân</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/assets/img/sport_icon.png}">
+
+
+<!--    <script>-->
+<!--        Code để cảnh báo thời gian ko hợp lệ-->
+<!--    </script>-->
+
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 1.5em;
+        }
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            color: #555;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px -11px 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            background-color: #FF4B2B;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #a64728;
+        }
+        #header {
+            height: 60px;
+            background-color: black;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1;
+        }
+
+        #nav {
+            display: flex;
+            align-items: center;
+            /*justify-content: space-between;*/
+            padding: 0 20px;
+            height: 100%;
+            list-style-type: none;
+            margin: 0;
+        }
+
+        #nav li {
+            display: inline-block;
+        }
+
+        #nav li a {
+            color: aliceblue;
+            text-decoration: none;
+            line-height: 60px;
+            padding: 0 24px;
+            display: inline-block;
+        }
+
+        #nav li:hover a {
+            color: black;
+            background-color: white;
+        }
+        a {
+            color: #333;
+            font-size: 16px;
+            text-decoration: none;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+<div id="header">
+    <ul id="nav">
+        <li><a th:href="@{/admin}"><img th:src="@{/assets/img/sport_icon.png}" alt="Home Page" style="width:30px;height:30px; margin-top: 10px;"></a>
+        </li>
+        <li><a th:href="@{/admin/members}">Người dùng</a></li>
+        <li><a th:href="@{/admin/rooms}">Sân</a></li>
+        <li><a th:href="@{/admin/bookings}">Thanh toán</a></li>
+        <li><a th:href="@{/logout}" method="post">Đăng xuất</a></li>
+    </ul>
+
+</div>
+<div id="header2">
+    <ul id="nav2">
+        <li><a th:href="@{/myInfo}">Tài khoản</a></li>
+    </ul>
+
+</div>
+<div class="container" >
+    <h1 style="margin-top: 50px;">Thông tin thuê sân</h1>
+    <form method="post" action="#" th:action="@{/admin/bookings/create2}" th:object="${bookingCreate}">
+        <label for="checkin-time">Giờ thuê sân :</label>
+        <input type="time" id="checkin-time" name="checkin_time" th:field="*{bookedTime}" required>
+        <label for="checkout-time">Giờ trả sân:</label>
+        <input type="time" id="checkout-time" name="checkout_time" th:field="*{expiredTime}" required>
+        <input type="submit" value="Xác nhận">
+    </form>
+</div>
+<div class="container">
+    <table class="table table-bordered">
+        <tbody>
+        <tr th:each="item,loop: ${notAvailableTime}">
+            <td th:text="${item.bookedTime}"></td>
+            <td th:text="${item.expiredTime}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

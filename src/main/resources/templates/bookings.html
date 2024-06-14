@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin thuê sân</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/assets/img/sport_icon.png}">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 1.5em;
+        }
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            color: #555;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px -11px 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            background-color: #FF4B2B;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #a64728;
+        }
+        #header {
+    height: 60px;
+    background-color: black;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
+#nav {
+    display: flex;
+    align-items: center;
+    /*justify-content: space-between;*/
+    padding: 0 20px;
+    height: 100%;
+    list-style-type: none;
+    margin: 0;
+}
+
+#nav li {
+    display: inline-block;
+}
+
+#nav li a {
+    color: aliceblue;
+    text-decoration: none;
+    line-height: 60px;
+    padding: 0 24px;
+    display: inline-block;
+}
+
+#nav li:hover a {
+    color: black;
+    background-color: white;
+}
+a {
+    color: #333;
+    font-size: 16px;
+    text-decoration: none;
+    margin: 15px 0;
+}
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <div id="header">
+        <ul id="nav">
+            <li><a th:href="@{/admin}"><img th:src="@{/assets/img/sport_icon.png}" alt="Home Page" style="width:30px;height:30px; margin-top: 10px;"></a>
+            </li>
+            <li><a th:href="@{/admin/members}">Người dùng</a></li>
+            <li><a th:href="@{/admin/rooms}">Sân</a></li>
+            <li><a th:href="@{/admin/bookings}">Thanh toán</a></li>
+            <li><a th:href="@{/logout}" method="post">Đăng xuất</a></li>
+        </ul>
+    </div>
+
+    <div>
+        <h1 class="text-center">Danh sách booking</h1>
+        <h1 class="text-center">Danh sách booking</h1>
+        <div class="container mb-3">
+            <form th:action="@{/admin/bookings/search}" method="get" class="d-flex" th:object="${bookingSearch}">
+                <label for="roomId">RoomId</label>
+                <input id="roomId" th:field="*{roomId}" class="form-control me-2" type="search" placeholder="Tìm kiếm theo roomId" aria-label="Search">
+                <label for="memberId">MemberId</label>
+                <input id="memberId" th:field="*{memberId}" class="form-control me-2" type="search" placeholder="Tìm kiếm theo memberId" aria-label="Search">
+                <label for="bookedDate">BookedDate</label>
+                <input id="bookedDate" th:field="*{bookedDate}" class="form-control me-2" type="date" placeholder="Tìm kiếm theo bookedDate" aria-label="Search">
+                <label for="dayTimeOfBooking">DayTimeOfBooking</label>
+                <input id="dayTimeOfBooking" th:field="*{dateTimeOfBooking}" class="form-control me-2" type="date" placeholder="Tìm kiếm theo dayTimeOfBooking" aria-label="Search">
+
+                <label for="paymentStatus">PaymentStatus</label>
+                <select id="paymentStatus" th:field="*{paymentStatus}">
+                    <option value="UNKNOWN">Không biết</option>
+                    <option value="Paid">Đã trả</option>
+                    <option value="Unpaid">Chưa trả</option>
+                    <option value="Cancelled">Bị hủy</option>
+                </select>
+
+                <button class="btn btn-outline-success" type="submit">Tìm kiếm</button>
+            </form>
+        </div>
+
+        <table class="table table-bordered" align="center" style="width:75%">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Room ID</th>
+                <th>Member ID</th>
+                <th>Ngày thuê</th>
+                <th>Giờ thuê</th>
+                <th>Thuê đến</th>
+                <th>Ngày tạo yêu cầu</th>
+                <th>Số tiền cần thanh toán</th>
+                <th>Trạng thái thanh toán</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item,loop: ${bookings}">
+                <td th:text="${item.id}"></td>
+                <td th:text="${item.roomid}"></td>
+                <td th:text="${item.memberid}"></td>
+                <td th:text="${item.bookedDate}"></td>
+                <td th:text="${item.bookedTime}"></td>
+                <td th:text="${item.expiredTime}"></td>
+                <td th:text="${item.datetimeOfBooking}"></td>
+                <td th:text="${item.paymentDue}"></td>
+                <td th:text="${item.paymentStatus}"></td>
+                <td>
+                    <form action="#"  th:action="@{/admin/bookings/update(id=${item.id})}" method="post">
+                        <input type="hidden" name="_method" value="update" />
+                        <button type="submit">Edit</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div id="header2">
+            <ul id="nav2">
+                <li><a th:href="@{/admin/bookings/create}">Tạo booking </a></li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>
