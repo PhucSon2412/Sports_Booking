@@ -6,13 +6,30 @@ import lombok.Setter;
 
 import java.util.List;
 
+@NamedStoredProcedureQuery(
+        name = "UpdateRoomType",
+        procedureName = "UpdateRoomType",
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "id", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "roomType", type = String.class),
+        }
+)
+
+@NamedStoredProcedureQuery(
+        name = "UpdateRoomPrice",
+        procedureName = "UpdateRoomPrice",
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "id", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "price", type = Double.class),
+        }
+)
+
 @Getter
 @Setter
 @Entity
 @Table(name = "rooms")
 public class Room {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false)
     private String id;
 

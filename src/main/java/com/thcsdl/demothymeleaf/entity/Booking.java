@@ -5,9 +5,23 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Date;
+
+@NamedStoredProcedureQuery(
+        name = "AddBooking",
+        procedureName = "AddBooking",
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "bookedDate", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "bookedTime", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "datetimeOfBooking", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "expiredTime", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "paymentDue", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "paymentStatus", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "memberId", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "roomId", type = String.class),
+        }
+)
+
 
 @Getter
 @Setter

@@ -2,15 +2,12 @@ package com.thcsdl.demothymeleaf.controller;
 
 import com.thcsdl.demothymeleaf.dto.request.BookingCreateRequest;
 import com.thcsdl.demothymeleaf.dto.request.BookingSearchRequest;
-import com.thcsdl.demothymeleaf.dto.request.BookingUpdateRequest;
-import com.thcsdl.demothymeleaf.dto.request.RoomCreateRequest;
 import com.thcsdl.demothymeleaf.entity.Booking;
 import com.thcsdl.demothymeleaf.entity.Member;
-import com.thcsdl.demothymeleaf.entity.Room;
 import com.thcsdl.demothymeleaf.repository.BookingRepository;
 import com.thcsdl.demothymeleaf.repository.MemberRepository;
-import com.thcsdl.demothymeleaf.repository.RoomRepository;
 import com.thcsdl.demothymeleaf.service.BookingService;
+import com.thcsdl.demothymeleaf.service.MemberService;
 import com.thcsdl.demothymeleaf.service.RoomService;
 import jakarta.servlet.http.HttpSession;
 import lombok.AccessLevel;
@@ -21,9 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
 
@@ -35,8 +30,9 @@ public class BookingController {
     BookingService bookingService;
 
     BookingRepository bookingRepository;
-    RoomRepository roomRepository;
     MemberRepository memberRepository;
+    private final MemberService memberService;
+    private final RoomService roomService;
 
     @GetMapping
     public String bookings(Model model, HttpSession session) {
@@ -46,7 +42,7 @@ public class BookingController {
         }
         if ( !member.getRole().equals("ADMIN"))
             return "redirect:/";
-        List<Booking> bookings = bookingRepository.findAll();
+        List<Booking> bookings = bookingService.findAllBooking();
         model.addAttribute("bookings", bookings);
         model.addAttribute("bookingSearch", new BookingSearchRequest());
         return "bookings";
@@ -63,8 +59,8 @@ public class BookingController {
 
 
         model.addAttribute("bookingCreate", new BookingCreateRequest());
-        model.addAttribute("rooms", roomRepository.findAll());
-        model.addAttribute("members",memberRepository.findAll());
+        model.addAttribute("rooms", roomService.getAllRooms());
+        model.addAttribute("members",memberService.getAllMembers());
         return "createBooking";
     }
 
@@ -80,7 +76,7 @@ public class BookingController {
     }
 
     @PostMapping("/create2")
-    public String createBooking2(@ModelAttribute(name = "bookingCreate") BookingCreateRequest request, Model model, HttpSession session) {
+    public String createBooking2(@ModelAttribute(name = "bookingCreate") BookingCreateRequest request, HttpSession session) {
         BookingCreateRequest request2 = (BookingCreateRequest) session.getAttribute("bookingCreate");
         Booking booking = new Booking();
         booking.setRoomid(request2.getRoomId());
@@ -92,7 +88,7 @@ public class BookingController {
                 .atZone(ZoneId.systemDefault()).toLocalDate());
         booking.setPaymentStatus("Unpaid");
 
-        Member member = memberRepository.findById(request2.getMemberId().toString2()).orElseThrow(RuntimeException::new);
+        Member member = memberService.getMemberById(request2.getMemberId().toString2());
         Double paymentDue = ((booking.getRoomid().getPrice()/60) * Duration.between(booking.getBookedTime(), booking.getExpiredTime()).toMinutes());
 
         if (member.getBookingList() == null){

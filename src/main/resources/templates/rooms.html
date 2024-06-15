@@ -36,10 +36,12 @@
             <label for="roomId">RoomId</label>
             <input id="roomId" th:field="*{id}" class="form-control me-2" type="search" placeholder="Tìm kiếm theo roomId" aria-label="Search">
             <label for="roomType2">RoomType</label>
-            <input id="roomType2" th:field="*{roomType}" class="form-control me-2" type="search" placeholder="Tìm kiếm theo roomType" aria-label="Search">
-
-
-<!--            <input class="form-control me-2" type="search" placeholder="Tìm kiếm theo loại phòng" aria-label="Search" name="roomType">-->
+            <select id="roomType2" th:field="*{roomType}">
+                <option value="UNKNOWN">Không biết</option>
+                <option value="Archery">Bắn cung</option>
+                <option value="Badminton">Cầu lông</option>
+                <option value="Tennis">Tennis</option>
+            </select>
             <button class="btn btn-outline-success" type="submit">Tìm kiếm</button>
         </form>
     </div>
@@ -50,7 +52,6 @@
             <th>ID</th>
             <th>Loại phòng</th>
             <th>Phí</th>
-            <th></th>
             <th></th>
         </tr>
         </thead>
@@ -65,35 +66,9 @@
                     <button type="submit">Edit</button>
                 </form>
             </td>
-            <td>
-                <form action="#"  th:action="@{/admin/rooms/delete(id=${item.id})}" method="post">
-                    <input type="hidden" name="_method" value="delete" />
-                    <button type="submit">Delete</button>
-                </form>
-            </td>
         </tr>
         </tbody>
     </table>
-</div>
-<div>
-    <h1>Tạo phòng</h1>
-    <form action="#"  th:action="@{/admin/rooms/create}" method="post" th:object="${roomCreate}">
-        <div>
-            <label for="roomType">Room Type:</label>
-            <select id="roomType" th:field="*{roomType}">
-                <option value="Tennis">Tennis</option>
-                <option value="Badminton">Badminton</option>
-                <option value="Archery">Archery</option>
-            </select>
-        </div>
-        <div>
-            <label for="price">Price:</label>
-            <input type="number" step="0.01" id="price" th:field="*{price}" />
-        </div>
-        <div>
-            <button type="submit">Create Room</button>
-        </div>
-    </form>
 </div>
 </body>
 <script th:src="@{/jsFile/slider.js}"></script>

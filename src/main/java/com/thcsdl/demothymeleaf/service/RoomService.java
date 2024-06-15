@@ -1,6 +1,5 @@
 package com.thcsdl.demothymeleaf.service;
 
-import com.thcsdl.demothymeleaf.dto.request.RoomCreateRequest;
 import com.thcsdl.demothymeleaf.entity.Room;
 import com.thcsdl.demothymeleaf.repository.RoomRepository;
 import lombok.AccessLevel;
@@ -18,42 +17,38 @@ import java.util.List;
 public class RoomService {
     RoomRepository roomRepository;
 
-    public Room createRoom(RoomCreateRequest request){
-        Room room = new Room();
-        room.setRoomType(request.getRoomType());
-        room.setPrice(request.getPrice());
-        return roomRepository.save(room);
-    }
-
     public List<Room> getAllRooms(){
-        return roomRepository.findAll();
+        return roomRepository.findAllRoom();
     }
 
-    public List<Room> getRoomByRoomType(String roomType){
-        return roomRepository.findByRoomType(roomType);
-    }
-
-    public Room updateRoom(Room room){
-        Room room1 = roomRepository.findById(room.getId()).orElseThrow(RuntimeException::new);
-        room1.setRoomType(room.getRoomType());
-        room1.setPrice(room.getPrice());
-        return roomRepository.save(room1);
-    }
-
-    public void deleteRoom(String Id){
-        roomRepository.deleteById(Id);
-    }
-
-    public List<Room> getRoomsByIdOrRoomType(String roomId, String roomType){
-        List<Room> rooms = roomRepository.findAll();
-        if(roomId!=""){
-            rooms = roomRepository.findAll().stream().filter(room -> room.getId().equals(roomId)).toList();
+    public List<Room> findByRoomIdOrRoomType(String roomId, String roomType){
+        List<Room> rooms = new ArrayList<>();
+        if(roomId.isEmpty()){
+            if(roomType.equals("UNKNOWN")){
+                rooms = roomRepository.findAllRoom();
+            }
+            else rooms = roomRepository.findByRoomType(roomType);
         }
-        List<Room> rooms1 = rooms;
-        if(roomType!=""){
-            rooms1 = rooms.stream().filter(room -> room.getRoomType().equals(roomType)).toList();
+        else {
+            if(roomType.equals("UNKNOWN")){
+                rooms = roomRepository.findByRoomType(roomId);
+            }
+            else rooms = roomRepository.findByRoomIdOrRoomType(roomId, roomType);
         }
-        return rooms1;
+        return rooms;
+    }
+
+
+    public void updateRoomType(String id, String roomType){
+        roomRepository.updateRoomType(id, roomType);
+    }
+
+    public void updateRoomPrice(String id, Double price){
+        roomRepository.updateRoomPrice(id, price);
+    }
+
+    public Room findByRoomId(String roomId){
+        return roomRepository.findByRoomId(roomId);
     }
 
     public List<String> getRoomIdByRoomType(String roomType){

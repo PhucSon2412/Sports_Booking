@@ -4,7 +4,6 @@ import com.thcsdl.demothymeleaf.dto.request.MemberLoginRequest;
 import com.thcsdl.demothymeleaf.dto.request.MemberRegisterRequest;
 import com.thcsdl.demothymeleaf.entity.Booking;
 import com.thcsdl.demothymeleaf.entity.Member;
-import com.thcsdl.demothymeleaf.entity.Room;
 import com.thcsdl.demothymeleaf.repository.BookingRepository;
 import com.thcsdl.demothymeleaf.repository.MemberRepository;
 import com.thcsdl.demothymeleaf.repository.RoomRepository;
@@ -21,9 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.time.Duration;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +49,7 @@ public class LoginController {
         model.addAttribute("registerRequest", new MemberRegisterRequest("","",""));
         model.addAttribute("loginRequest", new MemberLoginRequest("",""));
         model.addAttribute("loginFail", false);
+        model.addAttribute("registerFail", false);
         Member member = (Member) session.getAttribute("member");
         if ( member != null ) {
             if ( member.getRole().equals("ADMIN") ) {
@@ -63,7 +61,16 @@ public class LoginController {
     }
 
     @PostMapping("/register")
-    public String register(@ModelAttribute("registerRequest") MemberRegisterRequest request,HttpSession session){
+    public String register(@ModelAttribute("registerRequest") MemberRegisterRequest request,HttpSession session, Model model){
+        boolean registerFail = false;
+        if ( memberService.getMemberByEmail(request.getEmail()) != null ) {
+            registerFail = true;
+            model.addAttribute("registerFail", registerFail);
+            model.addAttribute("loginFail", false);
+            model.addAttribute("registerRequest", new MemberRegisterRequest("","",""));
+            model.addAttribute("loginRequest", new MemberLoginRequest("",""));
+            return "regist";
+        }
         session.setAttribute("member",memberService.createMember(request));
         return "redirect:/";
     }
@@ -74,6 +81,7 @@ public class LoginController {
         boolean loginFail = false;
         if ( member == null ) {
             loginFail = true;
+            model.addAttribute("registerFail", false);
             model.addAttribute("loginFail", loginFail);
             model.addAttribute("registerRequest", new MemberRegisterRequest("","",""));
             model.addAttribute("loginRequest", new MemberLoginRequest("",""));
@@ -163,7 +171,6 @@ public class LoginController {
                 }
                 else cancelable.add(false);
             }
-
         }
         model.addAttribute("cancelable", cancelable);
         model.addAttribute("paymentDue", paymentDue);

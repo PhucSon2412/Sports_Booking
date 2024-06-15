@@ -116,10 +116,7 @@
                 </tbody>
             </table>
 
-            <div th:text="${#numbers.formatDecimal(paymentDue, 1, 2)}">
-                Chi phí phát sinh :
-            </div>
-
+            <div th:text="'Chi phí phát sinh : ' + ${#numbers.formatDecimal(paymentDue, 1, 2)}"></div>
         </div>
     </div>
 

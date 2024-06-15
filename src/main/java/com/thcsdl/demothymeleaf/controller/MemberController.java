@@ -1,8 +1,6 @@
 package com.thcsdl.demothymeleaf.controller;
 
-import com.thcsdl.demothymeleaf.dto.request.MemberUpdateRequest;
 import com.thcsdl.demothymeleaf.entity.Member;
-import com.thcsdl.demothymeleaf.repository.MemberRepository;
 import com.thcsdl.demothymeleaf.service.MemberService;
 import jakarta.servlet.http.HttpSession;
 import lombok.AccessLevel;
@@ -21,7 +19,6 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class MemberController {
     MemberService memberService;
-    private final MemberRepository memberRepository;
     PasswordEncoder passwordEncoder;
 
     @GetMapping
@@ -49,7 +46,7 @@ public class MemberController {
             return "redirect:/";
 
         Member member = memberService.getMemberByEmail(email);
-        if (member == null) {
+        if (email.isEmpty()) {
             model.addAttribute("members", memberService.getAllMembers());
         }
         else model.addAttribute("members", member);
@@ -59,7 +56,7 @@ public class MemberController {
 
     @PostMapping("/update")
     public String updateMember(@RequestParam(name = "id") String id, Model model, HttpSession session) {
-        Member member = memberRepository.findById(id).orElse(null);
+        Member member = memberService.getMemberById(id);
         model.addAttribute("updateMember", member);
         session.setAttribute("updateMember", member);
         return "updateMember";
@@ -68,10 +65,21 @@ public class MemberController {
     @PostMapping("/realupdate")
     public String realUpdateMember(@ModelAttribute("updateMember") Member member, HttpSession session) {
         Member member1 = (Member) session.getAttribute("updateMember");
-        member1.setEmail(member.getEmail());
-        member1.setUsername(member.getUsername());
-        member1.setPassword(passwordEncoder.encode(member.getPassword()));
-        memberRepository.save(member1);
+        if (!member.getUsername().isEmpty()){
+            memberService.updateMemberUsername(member1.getId(), member.getUsername());
+        }
+        if (!member.getPassword().isEmpty()){
+            memberService.updateMemberPassword(member1.getId(), passwordEncoder.encode(member.getPassword()));
+        }
+        if (!member.getEmail().isEmpty()){
+            if (memberService.getMemberByEmail(member.getEmail()) != null) {
+                if (!memberService.getMemberByEmail(member.getEmail()).getId().equals(member1.getId())) {
+                    throw new RuntimeException();
+                }
+            }
+            memberService.updateMemberEmail(member1.getId(), member.getEmail());
+        }
+
         return "redirect:/admin/members";
     }
 

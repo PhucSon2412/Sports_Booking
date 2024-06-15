@@ -1,14 +1,11 @@
 package com.thcsdl.demothymeleaf.controller;
 
-import com.thcsdl.demothymeleaf.dto.request.BookingCreateRequest;
-import com.thcsdl.demothymeleaf.dto.request.BookingSearchRequest;
 import com.thcsdl.demothymeleaf.dto.request.UserBookingCreateRequest;
 import com.thcsdl.demothymeleaf.entity.Booking;
 import com.thcsdl.demothymeleaf.entity.Member;
 import com.thcsdl.demothymeleaf.entity.Room;
 import com.thcsdl.demothymeleaf.repository.BookingRepository;
 import com.thcsdl.demothymeleaf.repository.MemberRepository;
-import com.thcsdl.demothymeleaf.repository.RoomRepository;
 import com.thcsdl.demothymeleaf.service.BookingService;
 import jakarta.servlet.http.HttpSession;
 import lombok.AccessLevel;
@@ -21,10 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.List;
 
 @RequestMapping("/user")
 @Controller

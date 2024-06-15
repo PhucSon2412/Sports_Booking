@@ -1,8 +1,5 @@
 package com.thcsdl.demothymeleaf.service;
 
-import com.thcsdl.demothymeleaf.dto.request.BookingCreateRequest;
-import com.thcsdl.demothymeleaf.dto.request.BookingFindRequest;
-import com.thcsdl.demothymeleaf.dto.request.BookingUpdateRequest;
 import com.thcsdl.demothymeleaf.entity.Booking;
 import com.thcsdl.demothymeleaf.entity.Member;
 import com.thcsdl.demothymeleaf.entity.Room;
@@ -15,11 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import static org.springframework.data.jpa.domain.Specification.where;
 
 @Service
 @RequiredArgsConstructor
@@ -28,22 +21,6 @@ public class BookingService {
     BookingRepository bookingRepository;
     private final RoomRepository roomRepository;
     private final RoomService roomService;
-
-    public Booking createBooking(BookingCreateRequest request) {
-        Booking booking = new Booking();
-        booking.setBookedDate(request.getBookedDate());
-        booking.setBookedTime(request.getBookedTime());
-        booking.setExpiredTime(request.getExpiredTime());
-        booking.setDatetimeOfBooking(request.getDateTimeOfBooking());
-        booking.setMemberid(request.getMemberId());
-        booking.setRoomid(request.getRoomId());
-        booking.setPaymentDue(0d);
-        return bookingRepository.save(booking);
-    }
-
-    public void deleteBooking(Integer id) {
-        bookingRepository.deleteById(id);
-    }
 
     public List<Booking> findBookingByRoomIdAndBookedDate(Room room, LocalDate bookedDate) {
         List<Booking> bookings = bookingRepository.findAll().stream()
@@ -116,5 +93,7 @@ public class BookingService {
         return null;
     }
 
-
+    public List<Booking> findAllBooking(){
+        return bookingRepository.findAllBooking();
+    }
 }

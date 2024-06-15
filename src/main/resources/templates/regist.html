@@ -9,7 +9,6 @@
         <meta charset="utf-8">
         <link rel="stylesheet" th:href="@{/assets/css/registStyles.css}">
         <link rel="stylesheet" th:href="@{assets/font/themify-icons/themify-icons.css}">
-
 </head>
 <body>
     <div id="header">
@@ -21,10 +20,17 @@
         
     </div>
     <h2 style="margin-top: 50px;">Đăng nhập / Đăng ký</h2>
+    <div th:if="${loginFail}" class="error-message">
+        <p>Sai email hoặc mật khẩu</p>
+    </div>
+    <div th:if="${registerFail}" class="error-message" >
+        <p>Email đã được dùng</p>
+    </div>
     <div class="container" id="container">
         <div class="form-container sign-up-container">
             <form action="#" method="post" th:action="@{/register}" th:object="${registerRequest}">
                 <h1>Tạo tài khoản</h1>
+
                 <input type="text" placeholder="Họ và tên" th:field="*{username}"  />
                 <input type="email" placeholder="Email" th:field="*{email}"  />
                 <input type="password" placeholder="Mật khẩu"  th:field="*{password}" />
@@ -34,10 +40,6 @@
         <div class="form-container sign-in-container">
             <form action="#" method="post" th:action="@{/login}" th:object="${loginRequest}" >
                 <h1>Đăng nhập</h1>
-
-                <div th:if="${loginFail}" class="error-message">
-                    <p>Sai email hoặc mật khẩu</p>
-                </div>
 
                 <input type="email" th:field="*{email}" placeholder="Email" />
                 <input type="password" th:field="*{password}" placeholder="Mật khẩu" />

@@ -1,7 +1,5 @@
 package com.thcsdl.demothymeleaf.dto.request;
 
-import com.thcsdl.demothymeleaf.entity.Member;
-import com.thcsdl.demothymeleaf.entity.Room;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
