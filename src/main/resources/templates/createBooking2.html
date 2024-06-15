@@ -117,7 +117,26 @@
 
 </div>
 <div class="container" >
+    <div th:if="${createFail == 1}" class="create_booking_fail">
+        <p>Thời gian không hợp lệ</p>
+    </div>
+
+    <div th:if="${createFail == 2}" class="create_booking_fail">
+        <p>Thời gian thuê tối thiểu là 1 giờ</p>
+    </div>
+
     <h1 style="margin-top: 50px;">Thông tin thuê sân</h1>
+    <th:block th:if="${!notAvailableTime.isEmpty()}">
+        <label for="notAvailableTime">Danh sách những giờ đã có người thuê :</label>
+        <table id="notAvailableTime" class="table table-bordered">
+            <tbody>
+            <tr th:each="item,loop: ${notAvailableTime}">
+                <td th:text="${item.bookedTime}"></td>
+                <td th:text="${item.expiredTime}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </th:block>
     <form method="post" action="#" th:action="@{/admin/bookings/create2}" th:object="${bookingCreate}">
         <label for="checkin-time">Giờ thuê sân :</label>
         <input type="time" id="checkin-time" name="checkin_time" th:field="*{bookedTime}" required>
@@ -125,16 +144,6 @@
         <input type="time" id="checkout-time" name="checkout_time" th:field="*{expiredTime}" required>
         <input type="submit" value="Xác nhận">
     </form>
-</div>
-<div class="container">
-    <table class="table table-bordered">
-        <tbody>
-        <tr th:each="item,loop: ${notAvailableTime}">
-            <td th:text="${item.bookedTime}"></td>
-            <td th:text="${item.expiredTime}"></td>
-        </tr>
-        </tbody>
-    </table>
 </div>
 </body>
 </html>

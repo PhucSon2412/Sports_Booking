@@ -110,7 +110,17 @@ a {
         </ul>
 
     </div>
+
+
     <div class="container" >
+        <div th:if="${createFail == 1}" class="create_booking_fail">
+            <p>Thời gian không hợp lệ</p>
+        </div>
+
+        <div th:if="${createFail == 2}" class="create_booking_fail">
+            <p>Người dùng này đã đạt giới hạn số lượng đơn</p>
+        </div>
+
         <h1 style="margin-top: 50px;">Thông tin thuê sân</h1>
         <form method="post" action="#" th:action="@{/admin/bookings/create}" th:object="${bookingCreate}">
             <label for="room">Chọn phòng:</label>

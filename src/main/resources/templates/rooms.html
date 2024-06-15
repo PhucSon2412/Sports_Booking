@@ -33,11 +33,9 @@
     <div class="container mb-3">
         <form th:action="@{/admin/rooms/search}" method="post" class="d-flex" th:object="${roomSearch}">
 
-            <label for="roomId">RoomId</label>
-            <input id="roomId" th:field="*{id}" class="form-control me-2" type="search" placeholder="Tìm kiếm theo roomId" aria-label="Search">
-            <label for="roomType2">RoomType</label>
+            <input id="roomId" th:field="*{id}" class="form-control me-2" type="search" placeholder="Tìm kiếm theo ID phòng" aria-label="Search">
             <select id="roomType2" th:field="*{roomType}">
-                <option value="UNKNOWN">Không biết</option>
+                <option value="UNKNOWN">Loại phòng</option>
                 <option value="Archery">Bắn cung</option>
                 <option value="Badminton">Cầu lông</option>
                 <option value="Tennis">Tennis</option>
@@ -51,7 +49,7 @@
         <tr>
             <th>ID</th>
             <th>Loại phòng</th>
-            <th>Phí</th>
+            <th>Phí (nghìn đồng/1h)</th>
             <th></th>
         </tr>
         </thead>

@@ -111,18 +111,12 @@ a {
         <h1 class="text-center">Danh sách booking</h1>
         <div class="container mb-3">
             <form th:action="@{/admin/bookings/search}" method="get" class="d-flex" th:object="${bookingSearch}">
-                <label for="roomId">RoomId</label>
-                <input id="roomId" th:field="*{roomId}" class="form-control me-2" type="search" placeholder="Tìm kiếm theo roomId" aria-label="Search">
-                <label for="memberId">MemberId</label>
-                <input id="memberId" th:field="*{memberId}" class="form-control me-2" type="search" placeholder="Tìm kiếm theo memberId" aria-label="Search">
-                <label for="bookedDate">BookedDate</label>
-                <input id="bookedDate" th:field="*{bookedDate}" class="form-control me-2" type="date" placeholder="Tìm kiếm theo bookedDate" aria-label="Search">
-                <label for="dayTimeOfBooking">DayTimeOfBooking</label>
-                <input id="dayTimeOfBooking" th:field="*{dateTimeOfBooking}" class="form-control me-2" type="date" placeholder="Tìm kiếm theo dayTimeOfBooking" aria-label="Search">
-
-                <label for="paymentStatus">PaymentStatus</label>
+                <input id="roomId" th:field="*{roomId}" class="form-control me-2" type="search" placeholder="Tìm kiếm theo ID phòng" aria-label="Search">
+                <input id="memberId" th:field="*{memberId}" class="form-control me-2" type="search" placeholder="Tìm kiếm theo ID khách" aria-label="Search">
+                <input id="bookedDate" th:field="*{bookedDate}" class="form-control me-2" placeholder="Tìm kiếm theo ngày thuê" aria-label="Search" type="text" onfocus="(this.type='date')" onblur="(this.type='text')">
+                <input id="dayTimeOfBooking" th:field="*{dateTimeOfBooking}" class="form-control me-2" placeholder="Tìm kiếm theo ngày tạo đơn" aria-label="Search" type="text" onfocus="(this.type='date')" onblur="(this.type='text')">
                 <select id="paymentStatus" th:field="*{paymentStatus}">
-                    <option value="UNKNOWN">Không biết</option>
+                    <option value="UNKNOWN">Trạng thái thanh toán</option>
                     <option value="Paid">Đã trả</option>
                     <option value="Unpaid">Chưa trả</option>
                     <option value="Cancelled">Bị hủy</option>
@@ -130,6 +124,16 @@ a {
 
                 <button class="btn btn-outline-success" type="submit">Tìm kiếm</button>
             </form>
+        </div>
+
+        <div align="left">
+            <ul>
+                <li>
+                    <a th:href="@{/admin/bookings/create}">
+                        <button type="button" class="profile-button" id="confirm-logout-btn" style="margin: 0 10px;">Tạo đơn mới</button>
+                    </a>
+                </li>
+            </ul>
         </div>
 
         <table class="table table-bordered" align="center" style="width:75%">
@@ -142,7 +146,7 @@ a {
                 <th>Giờ thuê</th>
                 <th>Thuê đến</th>
                 <th>Ngày tạo yêu cầu</th>
-                <th>Số tiền cần thanh toán</th>
+                <th>Số tiền cần thanh toán (nghìn đồng)</th>
                 <th>Trạng thái thanh toán</th>
                 <th></th>
             </tr>
@@ -167,11 +171,6 @@ a {
             </tr>
             </tbody>
         </table>
-        <div id="header2">
-            <ul id="nav2">
-                <li><a th:href="@{/admin/bookings/create}">Tạo booking </a></li>
-            </ul>
-        </div>
     </div>
 
 </body>

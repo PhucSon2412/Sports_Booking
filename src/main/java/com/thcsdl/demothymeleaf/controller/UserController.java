@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @RequestMapping("/user")
 @Controller
@@ -54,6 +55,28 @@ public class UserController {
            Booking booking = new Booking();
            Member member = (Member) session.getAttribute("member");
            booking.setRoomid(room);
+
+           if (request.getBookedDate().isBefore(LocalDate.now()) ) {
+               model.addAttribute("createFail", 1);
+               return "userCreateBooking";
+           }
+           if (request.getBookedDate().equals(LocalDate.now()) ) {
+               if (request.getBookedTime().isBefore(LocalTime.now()) || request.getExpiredTime().isBefore(LocalTime.now())){
+                   model.addAttribute("createFail", 1);
+                   return "userCreateBooking";
+               }
+           }
+
+           if (request.getExpiredTime().isBefore(request.getBookedTime())){
+               model.addAttribute("createFail", 1);
+               return "userCreateBooking";
+           }
+           if (Duration.between(request.getBookedTime(), request.getExpiredTime()).toMinutes() < 60) {
+               model.addAttribute("createFail", 4);
+               return "userCreateBooking";
+           }
+
+
            booking.setBookedDate(request.getBookedDate());
            booking.setBookedTime(request.getBookedTime());
            booking.setExpiredTime(request.getExpiredTime());

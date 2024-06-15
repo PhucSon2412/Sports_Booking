@@ -18,6 +18,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
@@ -61,6 +63,7 @@ public class BookingController {
         model.addAttribute("bookingCreate", new BookingCreateRequest());
         model.addAttribute("rooms", roomService.getAllRooms());
         model.addAttribute("members",memberService.getAllMembers());
+        model.addAttribute("createFail",0);
         return "createBooking";
     }
 
@@ -68,6 +71,29 @@ public class BookingController {
     public String createBooking(@ModelAttribute(name = "bookingCreate") BookingCreateRequest request, Model model, HttpSession session) {
         model.addAttribute("bookingCreate", request);
         session.setAttribute("bookingCreate", request);
+        model.addAttribute("createFail",0);
+        if (request.getBookedDate().isBefore(LocalDate.now())){
+            model.addAttribute("bookingCreate", new BookingCreateRequest());
+            model.addAttribute("rooms", roomService.getAllRooms());
+            model.addAttribute("members",memberService.getAllMembers());
+            model.addAttribute("createFail",1);
+            return "createBooking";
+        }
+        if ((request.getMemberId().getRank() == null || request.getMemberId().getRank().equals("Silver")) && bookingRepository.findBookingsByMemberid(request.getMemberId()).size() > 5){
+            model.addAttribute("bookingCreate", new BookingCreateRequest());
+            model.addAttribute("rooms", roomService.getAllRooms());
+            model.addAttribute("members",memberService.getAllMembers());
+            model.addAttribute("createFail",2);
+            return "createBooking";
+        }
+        else if ( request.getMemberId().getRank().equals("Gold") && bookingRepository.findBookingsByMemberid(request.getMemberId()).size() > 10) {
+            model.addAttribute("bookingCreate", new BookingCreateRequest());
+            model.addAttribute("rooms", roomService.getAllRooms());
+            model.addAttribute("members",memberService.getAllMembers());
+            model.addAttribute("createFail",2);
+            return "createBooking";
+        }
+
 
         List<Booking> bookings = bookingService.findBookingByRoomIdAndBookedDate(request.getRoomId(),request.getBookedDate());
         model.addAttribute("notAvailableTime", bookings);
@@ -76,9 +102,29 @@ public class BookingController {
     }
 
     @PostMapping("/create2")
-    public String createBooking2(@ModelAttribute(name = "bookingCreate") BookingCreateRequest request, HttpSession session) {
+    public String createBooking2(@ModelAttribute(name = "bookingCreate") BookingCreateRequest request, HttpSession session, Model model) {
         BookingCreateRequest request2 = (BookingCreateRequest) session.getAttribute("bookingCreate");
         Booking booking = new Booking();
+        List<Booking> bookings = bookingService.findBookingByRoomIdAndBookedDate(request2.getRoomId(),request2.getBookedDate());
+        model.addAttribute("notAvailableTime", bookings);
+        if (request2.getBookedDate().equals(LocalDate.now())){
+            if (request.getBookedTime().isBefore(LocalTime.now()) || request.getExpiredTime().isBefore(LocalTime.now())){
+                model.addAttribute("createFail",1);
+                model.addAttribute("bookingCreate", request);
+                return "createBooking2";
+            }
+        }
+        if (request.getBookedTime().isAfter(request.getExpiredTime())) {
+            model.addAttribute("createFail",1);
+            model.addAttribute("bookingCreate", request);
+            return "createBooking2";
+        }
+        if (Duration.between(request.getBookedTime(), request.getExpiredTime()).toMinutes() < 60) {
+            model.addAttribute("createFail", 2);
+            model.addAttribute("bookingCreate", request);
+            return "createBooking2";
+        }
+
         booking.setRoomid(request2.getRoomId());
         booking.setBookedDate(request2.getBookedDate());
         booking.setBookedTime(request.getBookedTime());

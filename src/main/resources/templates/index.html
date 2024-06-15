@@ -98,6 +98,7 @@
         </div>
         <div class="archeryIntro">
             <!--regist section-->
+            <th:block th:if="${member == null}">
             <div class="regist-section">
                 <div class="content-section">
                     <h2 class="section-heading">
@@ -108,6 +109,7 @@
                     </p>
                 </div>
             </div>
+            </th:block>
             <div id="content">
             </div>
         </div>

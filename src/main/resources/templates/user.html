@@ -87,7 +87,10 @@
         <div class="modal-content">
             <span class="close" id="close-view-bills">&times;</span>
             <h2>Thông tin thanh toán</h2>
-
+            <th:block th:if="${notpaid.isEmpty()}">
+                <div th:text="'Bạn không có đơn nào cần thanh toán'"></div>
+            </th:block>
+            <th:block th:if="${!notpaid.isEmpty()}">
             <table class="table table-bordered">
                 <thead>
                 <tr>
@@ -95,7 +98,7 @@
                     <th>Ngày thuê</th>
                     <th>Giờ thuê</th>
                     <th>Giờ trả</th>
-                    <th>Số tiền cần thanh toán</th>
+                    <th>Số tiền cần thanh toán (nghìn đồng)</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -115,7 +118,7 @@
                 </tr>
                 </tbody>
             </table>
-
+            </th:block>
             <div th:text="'Chi phí phát sinh : ' + ${#numbers.formatDecimal(paymentDue, 1, 2)}"></div>
         </div>
     </div>
@@ -136,8 +139,10 @@
         <div class="modal-content">
             <span class="close" id="close-view-bookings">&times;</span>
             <h2>Sân đã đặt</h2>
-
-
+            <th:block th:if="${bookings.isEmpty()}">
+                <div th:text="'Bạn chưa từng đặt sân nào'"></div>
+            </th:block>
+            <th:block th:if="${!bookings.isEmpty()}">
             <table class="table table-bordered">
                 <thead>
                 <tr>
@@ -159,6 +164,7 @@
                 </tr>
                 </tbody>
             </table>
+            </th:block>
         </div>
     </div>
     <script th:src="@{/jsFile/userScript.js}"></script>

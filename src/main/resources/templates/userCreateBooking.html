@@ -111,12 +111,20 @@ a {
 
     </div>
     <div class="container" >
+        <div th:if="${createFail == 1}" class="create_booking_fail">
+            <p>Thời gian không hợp lệ</p>
+        </div>
+
         <div th:if="${createFail == 2}" class="create_booking_success">
             <p>Tạo phòng thành công</p>
         </div>
 
         <div th:if="${createFail == 3}" class="create_booking_fail">
             <p>Đã hết phòng vào giờ này</p>
+        </div>
+
+        <div th:if="${createFail == 4}" class="create_booking_fail">
+            <p>Thời gian thuê tối thiểu là 1 giờ</p>
         </div>
 
         <h1 style="margin-top: 50px;">Thông tin thuê sân</h1>

@@ -9,6 +9,11 @@
         <meta charset="utf-8">
         <link rel="stylesheet" th:href="@{/assets/css/registStyles.css}">
         <link rel="stylesheet" th:href="@{assets/font/themify-icons/themify-icons.css}">
+        <script>
+            function myFunction() {
+                confirm("Liên hệ admin qua sport4Group@gmail.com để đổi mật khẩu")
+            }
+        </script>
 </head>
 <body>
     <div id="header">
@@ -43,7 +48,8 @@
 
                 <input type="email" th:field="*{email}" placeholder="Email" />
                 <input type="password" th:field="*{password}" placeholder="Mật khẩu" />
-                <a href="#">Quên mật khẩu?</a>
+<!--                <a href="#">Quên mật khẩu?</a>-->
+                <a onclick="myFunction()">Quên mật khẩu?</a>
                 <button type="submit">Đăng nhập</button>
             </form>
         </div>
