@@ -119,7 +119,9 @@
                 </tbody>
             </table>
             </th:block>
-            <div th:text="'Chi phí phát sinh : ' + ${#numbers.formatDecimal(paymentDue, 1, 2)}"></div>
+            <th:block th:if="${paymentDue != 0}">
+                <div th:text="'Chi phí phát sinh : ' + ${#numbers.formatDecimal(paymentDue, 1, 2)}"></div>
+            </th:block>
         </div>
     </div>
 

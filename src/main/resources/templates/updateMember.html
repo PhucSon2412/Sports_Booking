@@ -31,7 +31,10 @@
         </div>
         <div class="profile-right">
             <table class="user-info">
-
+                <tr>
+                    <th>MemberID:</th>
+                    <td th:text="${updateMember.id}"></td>
+                </tr>
                 <tr>
                     <th>Email:</th>
                     <td th:text="${updateMember.email}"></td>
@@ -40,9 +43,33 @@
                     <th>Thành viên từ:</th>
                     <td th:text="${updateMember.memberSince}"></td>
                 </tr>
+                <tr>
+                    <th>Tổng số tiền đã thanh toán:</th>
+                    <td th:text="${#numbers.formatDecimal(updateMember.totalPaid, 1, 2)}"></td>
+                </tr>
+                <tr>
+                    <th>Hạng:</th>
+                    <td th:text="${updateMember.rank}"></td>
+                </tr>
+                <tr>
+                    <th>Cần thanh toán:</th>
+                    <td th:text="${#numbers.formatDecimal(updateMember.paymentDue, 1, 2)}"></td>
+                </tr>
+                <tr>
+                    <th>Số lần hủy cho phép:</th>
+                    <td th:text="${updateMember.penaltyExemption}"></td>
+                </tr>
+                <tr>
+                    <th>Số lần hủy cho phép:</th>
+                    <td th:text="${updateMember.penaltyExemption}"></td>
+                </tr>
+                <tr>
+                    <th>Chi phí phát sinh :</th>
+                    <td th:text="${#numbers.formatDecimal(paymentDue, 1, 2)}"></td>
+                </tr>
             </table>
         </div>
-    </div>
+    </div><br><br>
 <!--    <div id="change-info-modal" class="modal">-->
         <div class="modal-content">
             <span class="close" id="close-change-info">&times;</span>
@@ -55,6 +82,9 @@
                 <input type="email" id="email" name="email" th:field="*{email}"><br><br>
                 <label for="password">Mật khẩu:</label>
                 <input type="password" id="password" name="password" th:field="*{password}"><br><br>
+                <label for="penalty">Thanh toán chi phí phát sinh:</label>
+                <input type="text" id="penalty" name="penalty" th:object="${penalty}"><br><br>
+
                 <button type="submit" class="profile-button">Confirm</button>
             </form>
         </div>

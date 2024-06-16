@@ -1,6 +1,9 @@
 package com.thcsdl.demothymeleaf.controller;
 
+import com.thcsdl.demothymeleaf.entity.Booking;
 import com.thcsdl.demothymeleaf.entity.Member;
+import com.thcsdl.demothymeleaf.repository.BookingRepository;
+import com.thcsdl.demothymeleaf.repository.MemberRepository;
 import com.thcsdl.demothymeleaf.service.MemberService;
 import jakarta.servlet.http.HttpSession;
 import lombok.AccessLevel;
@@ -20,6 +23,8 @@ import java.util.List;
 public class MemberController {
     MemberService memberService;
     PasswordEncoder passwordEncoder;
+    private final BookingRepository bookingRepository;
+    private final MemberRepository memberRepository;
 
     @GetMapping
     public String getAllMembers(Model model, HttpSession session) {
@@ -59,11 +64,20 @@ public class MemberController {
         Member member = memberService.getMemberById(id);
         model.addAttribute("updateMember", member);
         session.setAttribute("updateMember", member);
+
+        List<Booking> notpaid = bookingRepository.findAll().stream().filter(booking -> booking.getMemberid().toString2().equals(member.toString2())).toList().stream().filter(booking -> booking.getPaymentStatus().equals("Unpaid")).toList();
+        Double paymentDue = member.getPaymentDue();
+        for (Booking booking : notpaid) {
+            paymentDue = paymentDue - booking.getPaymentDue();
+        }
+        model.addAttribute("paymentDue", paymentDue);
+        model.addAttribute("penalty",paymentDue);
+
         return "updateMember";
     }
 
     @PostMapping("/realupdate")
-    public String realUpdateMember(@ModelAttribute("updateMember") Member member, HttpSession session) {
+    public String realUpdateMember(@ModelAttribute("updateMember") Member member, HttpSession session,@ModelAttribute("penalty") Double penalty) {
         Member member1 = (Member) session.getAttribute("updateMember");
         if (!member.getUsername().isEmpty()){
             memberService.updateMemberUsername(member1.getId(), member.getUsername());
@@ -78,6 +92,12 @@ public class MemberController {
                 }
             }
             memberService.updateMemberEmail(member1.getId(), member.getEmail());
+        }
+        if (penalty > 0){
+            Member member2 = memberRepository.findByMemberId(member1.getId());
+            member2.setTotalPaid(member2.getTotalPaid()+penalty);
+            member2.setPaymentDue(member2.getPaymentDue()-penalty);
+            memberRepository.save(member2);
         }
 
         return "redirect:/admin/members";
