@@ -101,7 +101,7 @@ public class Member {
 
     @Override
     public String toString() {
-        return "Member [id=" + id + ", email=" + email + "]";
+        return email;
     }
 
     public String toString2(){

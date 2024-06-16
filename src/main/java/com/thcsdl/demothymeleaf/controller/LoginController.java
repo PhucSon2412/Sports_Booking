@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -116,6 +117,13 @@ public class LoginController {
 
     @GetMapping("/myInfo")
     public String myInfo(HttpSession session, Model model) {
+        if (session.getAttribute("updateFail") != null) {
+            if (session.getAttribute("updateFail").equals("Fail")){
+                model.addAttribute("updateFail", 1);
+            }
+            else model.addAttribute("updateFail", 0);
+        }
+        session.setAttribute("updateFail","NoFail");
         Member member2 = (Member) session.getAttribute("member");
         if ( member2 == null ) {
             return "redirect:/loginOrRegister";
@@ -131,24 +139,30 @@ public class LoginController {
         List<String> roomType = new ArrayList<>();
         Integer i = 0;
         for (Booking booking : notpaid) {
-            roomType.add(i,(roomRepository.findById(booking.getRoomid().toString2()).orElseThrow(RuntimeException::new)).getRoomType());
+            if (booking.getRoomid() == null) {
+                roomType.add("Tiền phạt");
+            }
+            else roomType.add(i,(roomRepository.findById(booking.getRoomid().toString2()).orElseThrow(RuntimeException::new)).getRoomType());
             i++;
         }
         model.addAttribute("roomType", roomType);
         List<Booking> bookings = bookingRepository.findAll().stream().filter(booking -> booking.getMemberid().toString2().equals(member.toString2())).toList();
         model.addAttribute("bookings", bookings);
 
-        Double paymentDue = member.getPaymentDue();
-        for (Booking booking : notpaid) {
-            paymentDue = paymentDue - booking.getPaymentDue();
-        }
-        model.addAttribute("paymentDue", paymentDue);
+//        Double paymentDue = member.getPaymentDue();
+//        for (Booking booking : notpaid) {
+//            paymentDue = paymentDue - booking.getPaymentDue();
+//        }
+//        model.addAttribute("paymentDue", paymentDue);
 
 
         List<String> roomType1 = new ArrayList<>();
         i = 0;
         for (Booking booking : bookings) {
-            roomType1.add(i,(roomRepository.findById(booking.getRoomid().toString2()).orElseThrow(RuntimeException::new)).getRoomType());
+            if (booking.getRoomid() == null){
+                roomType1.add("Tiền phạt");
+            }
+            else roomType1.add(i,(roomRepository.findById(booking.getRoomid().toString2()).orElseThrow(RuntimeException::new)).getRoomType());
             i++;
         }
         model.addAttribute("roomTypeAll", roomType1);
@@ -158,22 +172,25 @@ public class LoginController {
         for (Booking booking : notpaid) {
             LocalDate bookedDate = booking.getBookedDate();
             LocalDate currentDate = LocalDate.now();
+            if (bookedDate != null) {
+                if (member.getRank() == null || member.getRank().equals("Silver") || member.getRank().equals("Gold")) {
+                    if ( currentDate.isBefore(bookedDate.minusDays(2)) ) {
+                        cancelable.add(true);
+                    }
+                    else cancelable.add(false);
+                }
+                else if (member.getRank().equals("Diamond")){
+                    if ( currentDate.isBefore(bookedDate.minusDays(1))) {
+                        cancelable.add(true);
+                    }
+                    else cancelable.add(false);
+                }
+            }
+            else cancelable.add(false);
 
-            if (member.getRank() == null || member.getRank().equals("Silver") || member.getRank().equals("Gold")) {
-                if ( currentDate.isBefore(bookedDate.minusDays(2)) ) {
-                    cancelable.add(true);
-                }
-                else cancelable.add(false);
-            }
-            else if (member.getRank().equals("Diamond")){
-                if ( currentDate.isBefore(bookedDate.minusDays(1))) {
-                    cancelable.add(true);
-                }
-                else cancelable.add(false);
-            }
         }
         model.addAttribute("cancelable", cancelable);
-        model.addAttribute("paymentDue", paymentDue);
+//        model.addAttribute("paymentDue", paymentDue);
 
         return "user";
     }

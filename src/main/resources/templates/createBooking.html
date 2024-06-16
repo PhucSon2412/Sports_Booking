@@ -126,7 +126,7 @@ a {
             <label for="room">Chọn phòng:</label>
             <select id="room" name="room" th:field="*{roomId}" required>
                 <tr th:each="room : ${rooms}">
-                    <option th:value="${room.id}" th:text="'ID:'+${room.id}+' RoomType:'+${room.roomType}"></option>
+                    <option th:value="${room.id}" th:text="'ID:'+${room.id}+'    RoomType:'+${room.roomType}"></option>
                 </tr>
             </select>
             <label for="member1">Người thuê:</label>

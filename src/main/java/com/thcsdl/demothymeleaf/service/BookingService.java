@@ -23,7 +23,8 @@ public class BookingService {
     private final RoomService roomService;
 
     public List<Booking> findBookingByRoomIdAndBookedDate(Room room, LocalDate bookedDate) {
-        List<Booking> bookings = bookingRepository.findAll().stream()
+        List<Booking> bookings1 = bookingRepository.findAll().stream().filter(booking -> booking.getBookedDate()!=null).toList();
+        List<Booking> bookings = bookings1.stream()
                 .filter(booking -> booking.getBookedDate().equals(bookedDate))
                 .toList();
         List<Booking> filteredBookings = bookings.stream()
@@ -58,8 +59,9 @@ public class BookingService {
     }
 
     public Room findAvailableRoom(String roomType, LocalDate bookedDate, LocalTime bookedTime, LocalTime expiredTime) {
-        List<Booking> bookings = bookingRepository.findAll().stream()
-                .filter(booking -> booking.getBookedDate().equals(bookedDate))
+        List<Booking> bookings1 = bookingRepository.findAll().stream().filter(booking -> booking.getBookedDate() != null).toList();
+        List<Booking> bookings = bookings1.stream()
+                    .filter(booking -> booking.getBookedDate().equals(bookedDate))
                 .toList();
         List<Booking> filteredBookings = bookings.stream()
                 .filter(booking -> booking.getRoomid().toString3().equals(roomType))

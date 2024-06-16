@@ -139,13 +139,13 @@ a {
         <table class="table table-bordered" align="center" style="width:75%">
             <thead>
             <tr>
-                <th>ID</th>
-                <th>Room ID</th>
-                <th>Member ID</th>
+                <th>ID đơn</th>
+                <th>ID phòng</th>
+                <th>Email</th>
                 <th>Ngày thuê</th>
                 <th>Giờ thuê</th>
-                <th>Thuê đến</th>
-                <th>Ngày tạo yêu cầu</th>
+                <th>Giờ trả</th>
+                <th>Ngày tạo đơn</th>
                 <th>Số tiền cần thanh toán (nghìn đồng)</th>
                 <th>Trạng thái thanh toán</th>
                 <th></th>
@@ -162,10 +162,10 @@ a {
                 <td th:text="${item.datetimeOfBooking}"></td>
                 <td th:text="${item.paymentDue}"></td>
                 <td th:text="${item.paymentStatus}"></td>
-                <td>
+                <td th:if="${item.paymentStatus.equals('Unpaid')}">
                     <form action="#"  th:action="@{/admin/bookings/update(id=${item.id})}" method="post">
                         <input type="hidden" name="_method" value="update" />
-                        <button type="submit">Edit</button>
+                        <button type="submit">Sửa</button>
                     </form>
                 </td>
             </tr>

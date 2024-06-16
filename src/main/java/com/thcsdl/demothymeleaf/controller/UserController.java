@@ -44,6 +44,21 @@ public class UserController {
 
     @PostMapping("/create")
     public String createBooking(@ModelAttribute("createBooking") UserBookingCreateRequest request, HttpSession session, Model model) {
+        Member member = (Member) session.getAttribute("member");
+        if (member.getRank() == null && bookingRepository.findBookingsByMemberid(member).stream().filter(booking -> booking.getPaymentStatus().equals("Unpaid")).toList().size() <= 5) {}
+        else if (member.getRank() == null && bookingRepository.findBookingsByMemberid(member).size() > 5) {
+            model.addAttribute("createFail", 5);
+            return "userCreateBooking";
+        }
+        else if (member.getRank().equals("Silver") && bookingRepository.findBookingsByMemberid(member).stream().filter(booking -> booking.getPaymentStatus().equals("Unpaid")).toList().size() > 10) {
+            model.addAttribute("createFail", 5);
+            return "userCreateBooking";
+        }
+        else if (member.getRank().equals("Gold") && bookingRepository.findBookingsByMemberid(member).stream().filter(booking -> booking.getPaymentStatus().equals("Unpaid")).toList().size() > 20) {
+            model.addAttribute("createFail", 5);
+            return "userCreateBooking";
+        }
+
        Room room = bookingService.findAvailableRoom(request.getRoomType(),request.getBookedDate(),request.getBookedTime(),request.getExpiredTime());
        if (room == null) {
            model.addAttribute("createFail", 3);
@@ -53,7 +68,6 @@ public class UserController {
        {
            model.addAttribute("createFail", 2);
            Booking booking = new Booking();
-           Member member = (Member) session.getAttribute("member");
            booking.setRoomid(room);
 
            if (request.getBookedDate().isBefore(LocalDate.now()) ) {
@@ -140,7 +154,8 @@ public class UserController {
         }
         if (!member.getEmail().isEmpty()){
             if (memberRepository.findByEmail(member.getEmail()) != null) {
-                throw new RuntimeException();
+                session.setAttribute("updateFail", "Fail");
+                return "redirect:/myInfo";
             }
             member1.setEmail(member.getEmail());
         }
@@ -153,6 +168,7 @@ public class UserController {
     public String cancelBooking(@RequestParam(name = "id") Integer id, HttpSession session) {
         Booking cancelBooking = bookingRepository.findById(id).orElseThrow(RuntimeException::new);
         Member member = (Member) session.getAttribute("member");
+        member.setPaymentDue(member.getPaymentDue()-cancelBooking.getPaymentDue());
         member.setPenaltyExemption(member.getPenaltyExemption()-1);
         if (member.getPenaltyExemption()==0) {
             if (member.getRank() == null || member.getRank().equals("Silver")) {
@@ -161,11 +177,16 @@ public class UserController {
             else if (member.getRank().equals("Gold") || member.getRank().equals("Diamond")) {
                 member.setPenaltyExemption(4);
             }
-            member.setPaymentDue(member.getPaymentDue()+200);
+            Booking booking2 = new Booking();
+            booking2.setMemberid(member);
+            booking2.setDatetimeOfBooking(LocalDate.now());
+            booking2.setPaymentStatus("Unpaid");
+            booking2.setPaymentDue(200d);
+            member.setPaymentDue(member.getPaymentDue()+booking2.getPaymentDue());
+            bookingRepository.save(booking2);
         }
-        member.setPaymentDue(member.getPaymentDue()-cancelBooking.getPaymentDue());
-        memberRepository.save(member);
         cancelBooking.setPaymentStatus("Cancelled");
+        memberRepository.save(member);
         bookingRepository.save(cancelBooking);
         Member member1 =memberRepository.findByEmail(member.getEmail());
         session.setAttribute("member", member1);

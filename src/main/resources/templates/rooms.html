@@ -47,9 +47,9 @@
     <table class="table table-bordered" align="center" style="width:75%">
         <thead>
         <tr>
-            <th>ID</th>
+            <th>ID phòng</th>
             <th>Loại phòng</th>
-            <th>Phí (nghìn đồng/1h)</th>
+            <th>Phí thuê(nghìn đồng/h)</th>
             <th></th>
         </tr>
         </thead>
@@ -61,7 +61,7 @@
             <td>
                 <form action="#"  th:action="@{/admin/rooms/update(id=${item.id})}" method="post">
                     <input type="hidden" name="_method" value="update" />
-                    <button type="submit">Edit</button>
+                    <button type="submit">Sửa</button>
                 </form>
             </td>
         </tr>

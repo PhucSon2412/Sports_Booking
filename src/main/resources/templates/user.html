@@ -21,7 +21,9 @@
         </th:block>
     </ul>
 </div>
-
+    <div th:if="${updateFail == 1}" class="updateFail">
+        <p>Email đã được sử dụng</p>
+    </div>
     <div class="profile-container">
         <div class="profile-left">
             <img src="/assets/img/profile.jpg" alt="User Picture" class="user-picture">
@@ -99,7 +101,7 @@
                     <th>Giờ thuê</th>
                     <th>Giờ trả</th>
                     <th>Số tiền cần thanh toán (nghìn đồng)</th>
-                    <th></th>
+                    <th>Hủy đặt sân</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -109,19 +111,21 @@
                     <td th:text="${item.bookedTime}"></td>
                     <td th:text="${item.expiredTime}"></td>
                     <td th:text="${#numbers.formatDecimal(item.paymentDue, 1, 2)}"></td>
+                    <th:block th:if="${!cancelable.isEmpty()}">
                     <td th:if="${cancelable.get(loop.index)}">
                         <form action="#"  th:action="@{/user/cancel(id=${item.id})}" method="post" >
                             <input type="hidden" name="_method" value="delete" />
-                            <button type="submit">Cancel</button>
+                            <button type="submit">Hủy</button>
                         </form>
                     </td>
+                    </th:block>
                 </tr>
                 </tbody>
             </table>
             </th:block>
-            <th:block th:if="${paymentDue != 0}">
-                <div th:text="'Chi phí phát sinh : ' + ${#numbers.formatDecimal(paymentDue, 1, 2)}"></div>
-            </th:block>
+<!--            <th:block th:if="${paymentDue != 0}">-->
+<!--                <div th:text="'Chi phí phát sinh : ' + ${#numbers.formatDecimal(paymentDue, 1, 2)}"></div>-->
+<!--            </th:block>-->
         </div>
     </div>
 

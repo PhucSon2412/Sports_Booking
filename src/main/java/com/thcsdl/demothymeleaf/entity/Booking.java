@@ -34,16 +34,16 @@ public class Booking {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "room_id", nullable = false)
+    @JoinColumn(name = "room_id")
     private Room roomid;
 
-    @Column(name = "booked_date", nullable = false)
+    @Column(name = "booked_date")
     private LocalDate bookedDate;
 
-    @Column(name = "booked_time", nullable = false)
+    @Column(name = "booked_time")
     private LocalTime bookedTime;
 
-    @Column(name = "expired_time", nullable = false)
+    @Column(name = "expired_time")
     private LocalTime expiredTime;
 
     @ManyToOne

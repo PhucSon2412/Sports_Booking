@@ -38,11 +38,10 @@
     <table class="table table-bordered" style="width:75%" align="center">
         <thead>
         <tr>
-            <th>ID</th>
+            <th>ID người dùng</th>
             <th>Họ tên</th>
             <th>Email</th>
-            <th>Mật khẩu</th>
-            <th>Thành viên từ</th>
+            <th>Thành viên từ ngày</th>
             <th>Tiền cần chuyển (nghìn đồng)</th>
             <th>Tiền đã thanh toán (nghìn đồng)</th>
             <th>Hạng</th>
@@ -56,22 +55,26 @@
             <td th:text="${item.id}"></td>
             <td th:text="${item.username}"></td>
             <td th:text="${item.email}"></td>
-            <td th:text="${item.password}"></td>
             <td th:text="${item.memberSince}"></td>
             <td th:text="${item.paymentDue}"></td>
             <td th:text="${item.totalPaid}"></td>
-            <td th:text="${item.rank}"></td>
+            <th:block th:if="${item.rank != null}">
+                <td th:text="${item.rank}"></td>
+            </th:block>
+            <th:block th:if="${item.rank == null}">
+                <td th:text="'Chưa có'"></td>
+            </th:block>
             <td th:text="${item.penaltyExemption}"></td>
             <td>
                 <form action="#"  th:action="@{/admin/members/update(id=${item.id})}" method="post">
                     <input type="hidden" name="_method" value="update" />
-                    <button type="submit">Edit</button>
+                    <button type="submit">Sửa</button>
                 </form>
             </td>
             <td>
                 <form action="#"  th:action="@{/admin/members/delete(id=${item.id})}" method="post">
                     <input type="hidden" name="_method" value="delete" />
-                    <button type="submit">Delete</button>
+                    <button type="submit">Xóa</button>
                 </form>
             </td>
         </tr>

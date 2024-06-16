@@ -79,14 +79,22 @@ public class BookingController {
             model.addAttribute("createFail",1);
             return "createBooking";
         }
-        if ((request.getMemberId().getRank() == null || request.getMemberId().getRank().equals("Silver")) && bookingRepository.findBookingsByMemberid(request.getMemberId()).size() > 5){
+        if (request.getMemberId().getRank() == null && bookingRepository.findBookingsByMemberid(request.getMemberId()).stream().filter(booking -> booking.getPaymentStatus().equals("Unpaid")).toList().size() <= 5){}
+        else if (request.getMemberId().getRank() == null && bookingRepository.findBookingsByMemberid(request.getMemberId()).stream().filter(booking -> booking.getPaymentStatus().equals("Unpaid")).toList().size() > 5){
             model.addAttribute("bookingCreate", new BookingCreateRequest());
             model.addAttribute("rooms", roomService.getAllRooms());
             model.addAttribute("members",memberService.getAllMembers());
             model.addAttribute("createFail",2);
             return "createBooking";
         }
-        else if ( request.getMemberId().getRank().equals("Gold") && bookingRepository.findBookingsByMemberid(request.getMemberId()).size() > 10) {
+        else if ( request.getMemberId().getRank().equals("Silver") && bookingRepository.findBookingsByMemberid(request.getMemberId()).stream().filter(booking -> booking.getPaymentStatus().equals("Unpaid")).toList().size() > 10) {
+            model.addAttribute("bookingCreate", new BookingCreateRequest());
+            model.addAttribute("rooms", roomService.getAllRooms());
+            model.addAttribute("members",memberService.getAllMembers());
+            model.addAttribute("createFail",2);
+            return "createBooking";
+        }
+        else if ( request.getMemberId().getRank().equals("Gold") && bookingRepository.findBookingsByMemberid(request.getMemberId()).stream().filter(booking -> booking.getPaymentStatus().equals("Unpaid")).toList().size() > 20) {
             model.addAttribute("bookingCreate", new BookingCreateRequest());
             model.addAttribute("rooms", roomService.getAllRooms());
             model.addAttribute("members",memberService.getAllMembers());
@@ -219,7 +227,13 @@ public class BookingController {
                 else if (member.getRank().equals("Gold") || member.getRank().equals("Diamond")) {
                     member.setPenaltyExemption(4);
                 }
-                member.setPaymentDue(member.getPaymentDue()-200);
+                Booking booking2 = new Booking();
+                booking2.setMemberid(member);
+                booking2.setDatetimeOfBooking(LocalDate.now());
+                booking2.setPaymentStatus("Unpaid");
+                booking2.setPaymentDue(200d);
+                member.setPaymentDue(member.getPaymentDue()+booking2.getPaymentDue());
+                bookingRepository.save(booking2);
             }
         }
         booking1.setPaymentStatus(booking.getPaymentStatus());

@@ -71,13 +71,12 @@ public class MemberController {
             paymentDue = paymentDue - booking.getPaymentDue();
         }
         model.addAttribute("paymentDue", paymentDue);
-        model.addAttribute("penalty",paymentDue);
 
         return "updateMember";
     }
 
     @PostMapping("/realupdate")
-    public String realUpdateMember(@ModelAttribute("updateMember") Member member, HttpSession session,@ModelAttribute("penalty") Double penalty) {
+    public String realUpdateMember(@ModelAttribute("updateMember") Member member, HttpSession session) {
         Member member1 = (Member) session.getAttribute("updateMember");
         if (!member.getUsername().isEmpty()){
             memberService.updateMemberUsername(member1.getId(), member.getUsername());
@@ -93,13 +92,6 @@ public class MemberController {
             }
             memberService.updateMemberEmail(member1.getId(), member.getEmail());
         }
-        if (penalty > 0){
-            Member member2 = memberRepository.findByMemberId(member1.getId());
-            member2.setTotalPaid(member2.getTotalPaid()+penalty);
-            member2.setPaymentDue(member2.getPaymentDue()-penalty);
-            memberRepository.save(member2);
-        }
-
         return "redirect:/admin/members";
     }
 
