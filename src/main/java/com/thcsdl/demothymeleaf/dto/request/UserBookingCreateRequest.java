@@ -13,7 +13,8 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserBookingCreateRequest {
-    private String roomType;
+    private String roomId;
+//    private String roomType;
     private LocalDate bookedDate;
     private LocalTime bookedTime;
     private LocalTime expiredTime;

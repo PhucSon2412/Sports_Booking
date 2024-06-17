@@ -108,7 +108,6 @@ a {
         <ul id="nav2">
             <li><a th:href="@{/myInfo}">Tài khoản</a></li>
         </ul>
-
     </div>
     <div class="container" >
         <div th:if="${createFail == 1}" class="create_booking_fail">
@@ -130,20 +129,23 @@ a {
         <div th:if="${createFail == 5}" class="create_booking_fail">
             <p>Bạn đã đạt giới hạn số lượng đơn</p>
         </div>
-
         <h1 style="margin-top: 50px;">Thông tin thuê sân</h1>
-        <form method="post" action="#" th:action="@{/user/create}" th:object="${createBooking}">
-
-            <label for="roomType">Loại phòng:</label>
-
-            <select id="roomType" th:field="*{roomId}">
-                <tr th:each="room : ${rooms}">
-                    <option th:value="${room.id}" th:text="'ID:'+${room.id}+'    RoomType:'+${room.roomType}"></option>
+        <th:block th:if="${!notAvailableTime.isEmpty()}">
+            <label for="notAvailableTime">Danh sách những giờ đã có người thuê :</label>
+            <table id="notAvailableTime" class="table table-bordered">
+                <tbody>
+                <tr th:each="item,loop: ${notAvailableTime}">
+                    <td th:text="${item.bookedTime}"></td>
+                    <td th:text="${item.expiredTime}"></td>
                 </tr>
-            </select>
-
-            <label for="checkin">Ngày thuê sân:</label>
-            <input type="date" id="checkin" name="checkin" th:field="*{bookedDate}" required>
+                </tbody>
+            </table>
+        </th:block>
+        <form method="post" action="#" th:action="@{/user/create2}" th:object="${createBooking}">
+            <label for="checkin-time">Giờ thuê sân :</label>
+            <input type="time" id="checkin-time" name="checkin_time" th:field="*{bookedTime}" required>
+            <label for="checkout-time">Giờ trả sân:</label>
+            <input type="time" id="checkout-time" name="checkout_time" th:field="*{expiredTime}" required>
             <input type="submit" value="Xác nhận">
         </form>
     </div>

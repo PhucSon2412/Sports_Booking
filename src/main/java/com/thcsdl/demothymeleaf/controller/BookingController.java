@@ -133,6 +133,35 @@ public class BookingController {
             return "createBooking2";
         }
 
+        for (Booking booking1 : bookings) {
+            if (request.getBookedTime().isAfter(booking1.getBookedTime())&&request.getBookedTime().isBefore(booking1.getExpiredTime())){
+                model.addAttribute("createFail",1);
+                model.addAttribute("bookingCreate", request);
+                return "createBooking2";
+            }
+            else if (request.getExpiredTime().isAfter(booking1.getBookedTime())&&request.getExpiredTime().isBefore(booking1.getExpiredTime())){
+                model.addAttribute("createFail",1);
+                model.addAttribute("bookingCreate", request);
+                return "createBooking2";
+            }
+            else if (request.getBookedTime().isBefore(booking1.getBookedTime())&&request.getExpiredTime().isAfter(booking1.getExpiredTime())){
+                model.addAttribute("createFail",1);
+                model.addAttribute("bookingCreate", request);
+                return "createBooking2";
+            }
+            else if (request.getBookedTime().equals(booking1.getBookedTime())||request.getBookedTime().equals(booking1.getExpiredTime())){
+                model.addAttribute("createFail",1);
+                model.addAttribute("bookingCreate", request);
+                return "createBooking2";
+            }
+            else if (request.getExpiredTime().equals(booking1.getExpiredTime())||request.getExpiredTime().equals(booking1.getBookedTime())){
+                model.addAttribute("createFail",1);
+                model.addAttribute("bookingCreate", request);
+                return "createBooking2";
+            }
+        }
+
+
         booking.setRoomid(request2.getRoomId());
         booking.setBookedDate(request2.getBookedDate());
         booking.setBookedTime(request.getBookedTime());
