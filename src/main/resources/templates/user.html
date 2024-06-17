@@ -53,7 +53,12 @@
                 </tr>
                 <tr>
                     <th>Hạng:</th>
-                    <td th:text="${member.rank}"></td>
+                    <th:block th:if="${member.rank != null}">
+                        <td th:text="${member.rank}"></td>
+                    </th:block>
+                    <th:block th:if="${member.rank == null}">
+                        <td th:text="'Chưa có'"></td>
+                    </th:block>
                 </tr>
                 <tr>
                     <th>Số lần hủy cho phép:</th>

@@ -113,9 +113,7 @@ a {
         <h1 class="text-center">Danh sách booking</h1>
         <div class="container mb-3">
             <form th:action="@{/admin/bookings/search}" method="get" class="d-flex" th:object="${bookingSearch}">
-                <input id="roomId" th:field="*{roomId}" class="form-control me-2" type="search" placeholder="Tìm kiếm theo ID phòng" aria-label="Search">
                 <input id="memberId" th:field="*{memberId}" class="form-control me-2" type="search" placeholder="Tìm kiếm theo ID khách" aria-label="Search">
-                <input id="bookedDate" th:field="*{bookedDate}" class="form-control me-2" placeholder="Tìm kiếm theo ngày thuê" aria-label="Search" type="text" onfocus="(this.type='date')" onblur="(this.type='text')">
                 <input id="dayTimeOfBooking" th:field="*{dateTimeOfBooking}" class="form-control me-2" placeholder="Tìm kiếm theo ngày tạo đơn" aria-label="Search" type="text" onfocus="(this.type='date')" onblur="(this.type='text')">
                 <select id="paymentStatus" th:field="*{paymentStatus}">
                     <option value="UNKNOWN">Trạng thái thanh toán</option>

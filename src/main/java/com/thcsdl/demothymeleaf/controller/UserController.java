@@ -243,8 +243,19 @@ public class UserController {
         member.setPaymentDue(member.getPaymentDue()+paymentDue);
         memberRepository.save(member);
         bookingRepository.save(booking);
+        model.addAttribute("booking", booking);
+        session.setAttribute("booking",booking);
+        return "userRating";
+    }
+
+    @PostMapping("/rating")
+    public String rating(@ModelAttribute(name = "booking")Booking booking,HttpSession session){
+        Booking booking1 = (Booking) session.getAttribute("booking");
+        booking1.setRating(booking.getRating());
+        bookingRepository.save(booking1);
         return "redirect:/user/create";
     }
+
 
 
     @GetMapping("/service")

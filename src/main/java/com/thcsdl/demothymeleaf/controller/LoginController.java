@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.awt.print.Book;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -134,6 +135,7 @@ public class LoginController {
 
         model.addAttribute("member", member);
         model.addAttribute("updateMember", new Member());
+//        List<Booking> notpaid = bookingRepository.findAllUnpaidbyMemberId(member.getId());
         List<Booking> notpaid = bookingRepository.findAll().stream().filter(booking -> booking.getMemberid().toString2().equals(member.toString2())).toList().stream().filter(booking -> booking.getPaymentStatus().equals("Unpaid")).toList();
         model.addAttribute("notpaid", notpaid);
         List<String> roomType = new ArrayList<>();
@@ -146,6 +148,7 @@ public class LoginController {
             i++;
         }
         model.addAttribute("roomType", roomType);
+//        List<Booking> bookings = bookingRepository.findAllBookingbyMemberId(member.getId());
         List<Booking> bookings = bookingRepository.findAll().stream().filter(booking -> booking.getMemberid().toString2().equals(member.toString2())).toList();
         model.addAttribute("bookings", bookings);
 

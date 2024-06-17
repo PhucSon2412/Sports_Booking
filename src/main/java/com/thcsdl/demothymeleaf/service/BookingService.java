@@ -34,28 +34,20 @@ public class BookingService {
         return filteredBookings;
     }
 
-    public List<Booking> findBookingByRoomIdOrMemberIdOrBookedDateOrDateTimeOfBookingOrPaymentStatus(Room room, Member member, LocalDate bookedDate, LocalDate dateTimeOfBooking, String paymentStatus ) {
+    public List<Booking> findBookingByMemberIdOrDateTimeOfBookingOrPaymentStatus(Member member, LocalDate dateTimeOfBooking, String paymentStatus ) {
         List<Booking> bookings = bookingRepository.findAll();
-        if (room != null) {
-            bookings = bookingRepository.findAll().stream().filter(booking -> booking.getRoomid().toString2().equals(room.getId())).toList();
+        if (member != null) {
+            bookings = bookingRepository.findAll().stream().filter(booking -> booking.getMemberid().toString2().equals(member.getId())).toList();
         }
         List<Booking> bookings1 = bookings;
-        if (member != null) {
-            bookings1 = bookings.stream().filter(booking -> booking.getMemberid().toString2().equals(member.getId())).toList();
+        if (dateTimeOfBooking != null) {
+            bookings1 = bookings.stream().filter(booking -> booking.getDatetimeOfBooking().equals(dateTimeOfBooking)).toList();
         }
         List<Booking> bookings2 = bookings1;
-        if (bookedDate != null) {
-            bookings2 = bookings1.stream().filter(booking -> booking.getBookedDate().equals(bookedDate)).toList();
-        }
-        List<Booking> bookings3 = bookings2;
-        if (dateTimeOfBooking != null) {
-            bookings3 = bookings2.stream().filter(booking -> booking.getDatetimeOfBooking().equals(dateTimeOfBooking)).toList();
-        }
-        List<Booking> bookings4 = bookings3;
         if (!paymentStatus.equals("UNKNOWN")) {
-            bookings4 = bookings3.stream().filter(booking -> booking.getPaymentStatus().equals(paymentStatus)).toList();
+            bookings2 = bookings1.stream().filter(booking -> booking.getPaymentStatus().equals(paymentStatus)).toList();
         }
-        return bookings4;
+        return bookings2;
     }
 
     public Room findAvailableRoom(String roomType, LocalDate bookedDate, LocalTime bookedTime, LocalTime expiredTime) {

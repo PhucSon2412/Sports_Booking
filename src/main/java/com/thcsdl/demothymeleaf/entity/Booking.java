@@ -22,6 +22,17 @@ import java.time.LocalTime;
         }
 )
 
+@NamedStoredProcedureQuery(
+        name = "SearchBookings",
+        procedureName = "SearchBookings",
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "memberId", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "dateTimeOfBooking", type = LocalDate.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "paymentStatus", type = String.class),
+        }
+)
+
+
 
 @Getter
 @Setter
@@ -59,12 +70,12 @@ public class Booking {
     @Column(name = "payment_due", nullable = false)
     private Double paymentDue;
 
+    @Column(name = "rating", nullable = true)
+    private Integer rating;
+
     @Override
     public String toString() {
         return "Booking [id=" + id + ", paymentStatus=" + paymentStatus + "]" + "\n";
     }
 
-    public String toString2() {
-        return roomid.toString2();
-    }
 }

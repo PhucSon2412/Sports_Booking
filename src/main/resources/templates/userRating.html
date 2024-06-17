@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>
+        Đặt phòng thành công
+    </title>
+    <link rel="icon" type="image/x-icon" th:href="@{/assets/img/sport_icon.png}">
+    <meta charset="utf-8">
+    <link rel="stylesheet" th:href="@{/assets/css/userStyles.css}">
+    <link rel="stylesheet" th:href="@{assets/font/themify-icons/themify-icons.css}">
+</head>
+<body>
+<div id="header">
+    <ul id="nav">
+        <li><a th:href="@{/}"><img th:src="@{/assets/img/sport_icon.png}" alt="Home Page" style="width:30px;height:30px; margin-top: 10px;"></a>
+        </li>
+        <li><a th:href="@{/}">Trang chủ</a></li>
+        <li><a th:href="@{/user/create}">Đặt sân</a></li>
+        <li><a th:href="@{/myInfo}">Tài khoản</a></li>
+        </th:block>
+    </ul>
+</div>
+<div class="profile-container">
+    <div class="booking">
+        <table class="user-info">
+            <h2>Chúc mừng bạn đã đặt phòng thành công</h2>
+            <tr>
+                <th>ID phòng:</th>
+                <td th:text="${booking.roomid}"></td>
+            </tr>
+            <tr>
+                <th>Ngày thuê:</th>
+                <td th:text="${booking.bookedDate}"></td>
+            </tr>
+            <tr>
+                <th>Giờ thuê:</th>
+                <td th:text="${booking.bookedTime}"></td>
+            </tr>
+            <tr>
+                <th>Giờ trả:</th>
+                <td th:text="${booking.expiredTime}"></td>
+            </tr>
+            <tr>
+                <th>Tổng số tiền đã thanh toán:</th>
+                <td th:text="${#numbers.formatDecimal(booking.paymentDue, 1, 2)}"></td>
+            </tr>
+        </table>
+        <div>
+            <form th:action="@{/user/rating}" th:object="${booking}" method="post">
+                <select th:field="*{rating}" required>
+                    <option th:value="1" th:text="'Rất tệ'"></option>
+                    <option th:value="2" th:text="'Tệ'"></option>
+                    <option th:value="3" th:text="'Bình thường'"></option>
+                    <option th:value="4" th:text="'Tốt'"></option>
+                    <option th:value="5" th:text="'Rất tốt'"></option>
+                </select>
+                <button type="submit">Đánh giá</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

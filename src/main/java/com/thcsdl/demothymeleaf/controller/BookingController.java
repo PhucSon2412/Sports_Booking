@@ -214,8 +214,9 @@ public class BookingController {
             return "redirect:/";
 
 
-        model.addAttribute("bookings", bookingService.findBookingByRoomIdOrMemberIdOrBookedDateOrDateTimeOfBookingOrPaymentStatus(request.getRoomId(),request.getMemberId(),request.getBookedDate(),request.getDateTimeOfBooking(),request.getPaymentStatus()));
-         return "bookings";
+        model.addAttribute("bookings", bookingService.findBookingByMemberIdOrDateTimeOfBookingOrPaymentStatus(request.getMemberId(),request.getDateTimeOfBooking(),request.getPaymentStatus()));
+//        model.addAttribute("bookings", bookingRepository.findBooking(request.getMemberId().getId(),request.getDateTimeOfBooking(),request.getPaymentStatus()));
+        return "bookings";
     }
 
     @PostMapping("/update")
