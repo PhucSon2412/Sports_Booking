@@ -6,7 +6,7 @@
 
 #header {
     height: 60px;
-    background-color: black;
+    background-color: rgb(18, 105, 16);
     position: fixed;
     top: 0;
     left: 0;
@@ -49,7 +49,9 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f4f4f4;
+    background-image: url('../img/sport-bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .profile-container {
     display: flex;

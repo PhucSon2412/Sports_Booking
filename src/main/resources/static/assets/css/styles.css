@@ -92,6 +92,9 @@ html {
 
 body {
   font-family: 'Montserrat', sans-serif;
+  background-image: url('../img/sport-bg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 #main { }

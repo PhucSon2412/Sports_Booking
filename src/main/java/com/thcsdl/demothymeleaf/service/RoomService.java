@@ -40,11 +40,15 @@ public class RoomService {
 
 
     public void updateRoomType(String id, String roomType){
-        roomRepository.updateRoomType(id, roomType);
+        Room room =  roomRepository.findByRoomId(id);
+        room.setRoomType(roomType);
+        roomRepository.save(room);
     }
 
     public void updateRoomPrice(String id, Double price){
-        roomRepository.updateRoomPrice(id, price);
+        Room room = roomRepository.findByRoomId(id);
+        room.setPrice(price);
+        roomRepository.save(room);
     }
 
     public Room findByRoomId(String roomId){

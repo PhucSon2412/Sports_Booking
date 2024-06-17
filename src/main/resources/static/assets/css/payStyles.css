@@ -12,11 +12,14 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    background-image: url('../img/sport-bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 #header {
     height: 60px;
-    background-color: black;
+    background-color: rgb(18, 105, 16);
     position: fixed;
     top: 0;
     left: 0;
