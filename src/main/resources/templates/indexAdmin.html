@@ -22,129 +22,62 @@
             <li><a th:href="@{/logout}" method="post">Đăng xuất</a></li>
         </ul>
     </div>
-    <!-- First Slideshow container -->
-    <!-- Container for the image gallery -->
-    <div class="container">
-        <!-- Full-width images with number text -->
-        <div class="mySlides">
-            <img th:src="@{/assets/img/archery.jpg}" class="center-image">
-        </div>
-        <div class="mySlides">
-            <img th:src="@{/assets/img/bad.png}" class="center-image">
-        </div>
-        <div class="mySlides">
-            <img th:src="@{/assets/img/tennis.jpg}" class="center-image">
-        </div>
-        <div class="mySlides">
-            <div class="numbertext">4 / 6</div>
-            <img th:src="@{/assets/img/archery3.jpg}" class="center-image">
-        </div>
-        <div class="mySlides">
-            <div class="numbertext">5 / 6</div>
-            <img th:src="@{/assets/img/bad2.png}" class="center-image">
-        </div>
-        <div class="mySlides">
-            <div class="numbertext">6 / 6</div>
-            <img th:src="@{/assets/img/tennis2.jpg}" class="center-image">
-        </div>
-        <!-- Next and previous buttons -->
-        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-        <a class="next" onclick="plusSlides(1)">&#10095;</a>
-        <!-- Thumbnail images -->
-        <div class="row">
-            <div class="column">
-                <img class="demo cursor" th:src="@{/assets/img/archery.jpg}" style="width:100%" onclick="currentSlide(1)"  >
-            </div>
-            <div class="column">
-                <img class="demo cursor" th:src="@{assets/img/bad.png}" style="width:100%" onclick="currentSlide(2)" >
-            </div>
-            <div class="column">
-                <img class="demo cursor" th:src="@{assets/img/tennis.jpg}" style="width:100%" onclick="currentSlide(3)" >
-            </div>
-            <div class="column">
-                <img class="demo cursor" th:src="@{/assets/img/archery3.jpg}" style="width:100%" onclick="currentSlide(4)" >
-            </div>
-            <div class="column">
-                <img class="demo cursor" th:src="@{/assets/img/bad2.png}" style="width:100%" onclick="currentSlide(5)" >
-            </div>
-            <div class="column">
-                <img class="demo cursor" th:src="@{/assets/img/tennis2.jpg}" style="width:100%" onclick="currentSlide(6)" >
-            </div>
-        </div>
-    </div>
     <div id="content">
         <div class="content-section">
-            <h2 class="section-heading" style="
+
+            <table>
+                <h2 style="
                 border-radius: 15px 50px;
-                background: #73AD21;
                 padding: 20px;
                 width: 200px;
                 height: 80px;
                 margin: auto; ">
-                4Group
-            </h2>
-            <p class="section-sub-heading" style="
-                font-size: larger;
-                ">
-                We love Sport
-            </p>
-            <p class="about-text" style="margin-right: 800px;">
-                Trung tâm Thể thao 4Group là địa điểm lý tưởng cho những ai đam mê bắn cung, cầu lông và tennis. Với cơ sở vật chất hiện đại và đạt tiêu chuẩn quốc tế, trung tâm cung cấp các sân tập rộng rãi và trang thiết bị tối tân, đảm bảo mang lại trải nghiệm tuyệt vời cho mọi người chơi. Đội ngũ huấn luyện viên giàu kinh nghiệm và chuyên nghiệp luôn sẵn sàng hỗ trợ và hướng dẫn, giúp bạn nâng cao kỹ năng và tận hưởng niềm vui thể thao. Trung tâm còn có khu vực nghỉ ngơi thoải mái và các dịch vụ tiện ích khác, tạo điều kiện tốt nhất để bạn thư giãn và tận hưởng thời gian tại đây.
-            </p>
-        </div>
-        <div class="archeryIntro">
-            <!--regist section-->
-            <div class="regist-section">
-                <div class="content-section">
-                    <h2 class="section-heading">
-                        Bạn muốn đặt sân ?
-                    </h2>
-                    <p class="section-sub-heading">
-                        <button name="button" type="button"><a th:href="@{/regist}" style="font-style: italic; font-weight: 1000; color: black; text-decoration: none; margin: 0 4px;">Đăng ký</a></button> tài khoản và nhận tư vấn miễn phí
-                    </p>
-                </div>
-            </div>
-            <div id="content">
-            </div>
+                    Thống kê
+                </h2>
+                <tr>
+                    <th>Tổng số người dùng:</th>
+                    <td th:text="${memberCount}"></td>
+                </tr>
+                <tr>
+                    <th>Tổng số phòng:</th>
+                    <td th:text="${roomCount}"></td>
+                </tr>
+                <tr>
+                    <th>Tổng số đơn:</th>
+                    <td th:text="${bookingCount}"></td>
+                </tr>
+                <tr>
+                    <th>Thống kê đánh giá:</th>
+                    <td th:text="${'1 sao : ' + oneStar}"></td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td th:text="${'2 sao : ' + twoStar}"></td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td th:text="${'3 sao : ' +threeStar}"></td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td th:text="${'4 sao : '+fourStar}"></td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td th:text="${'5 sao : '+fiveStar}"></td>
+                </tr>
+                <tr>
+                    <th>Trung bình:</th>
+                    <td th:text="${#numbers.formatDecimal(averageStar, 1, 2) + ' sao trên tổng số '+ bookings+' đánh giá'}"></td>
+                </tr>
+            </table>
+<!--            <p>Tổng số người dùng:</p>-->
+<!--            <p>Tổng số phòng:</p>-->
+<!--            <p>Tổng số đơn:</p>-->
+<!--            <p>Thống kê đánh giá:</p>-->
+<!--            <p>Giá trị trung bình trên tổng số đánh giá:</p>-->
         </div>
     </div>
-    <div class="scroll-container">
-        <img th:src="@{/assets/gallery/ten1.jpg}" alt="Cinque Terre">
-        <img th:src="@{/assets/gallery/arch2.jpg}" alt="Forest">
-        <img th:src="@{/assets/gallery/bad1.jpg}" alt="Northern Lights">
-        <img th:src="@{/assets/gallery/ten2.jpg}" alt="Mountains">
-    </div>
-    <!--Demo Footer 2-->
-    <footer class="footer" style="margin-top: 150px;">
-        <div class="waves">
-            <div class="wave" id="wave1"></div>
-            <div class="wave" id="wave2"></div>
-            <div class="wave" id="wave3"></div>
-            <div class="wave" id="wave4"></div>
-        </div>
-        <ul class="social-icon">
-            <li class="social-icon__item"><a class="social-icon__link" href="#">
-                <ion-icon name="logo-facebook"></ion-icon>
-            </a></li>
-            <li class="social-icon__item"><a class="social-icon__link" href="#">
-                <ion-icon name="logo-twitter"></ion-icon>
-            </a></li>
-            <li class="social-icon__item"><a class="social-icon__link" href="#">
-                <ion-icon name="logo-linkedin"></ion-icon>
-            </a></li>
-            <li class="social-icon__item"><a class="social-icon__link" href="#">
-                <ion-icon name="logo-instagram"></ion-icon>
-            </a></li>
-        </ul>
-        <ul class="menu">
-            <li class="menu__item"><a class="menu__link" href="#">Home</a></li>
-            <li class="menu__item"><a class="menu__link" href="#">About</a></li>
-            <li class="menu__item"><a class="menu__link" href="#">Services</a></li>
-            <li class="menu__item"><a class="menu__link" href="#">Team</a></li>
-            <li class="menu__item"><a class="menu__link" href="#">Contact</a></li>
-        </ul>
-        <p>&copy;2021 Nadine Coelho | All Rights Reserved</p>
-    </footer>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <!--End demo Footer 2-->

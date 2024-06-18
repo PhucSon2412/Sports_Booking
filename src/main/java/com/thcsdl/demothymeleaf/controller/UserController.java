@@ -202,9 +202,6 @@ public class UserController {
             }
         }
 
-
-
-
         Booking booking = new Booking();
         booking.setRoomid(roomRepository.findByRoomId(request1.getRoomId()));
         booking.setMemberid((Member)session.getAttribute("member"));

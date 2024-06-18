@@ -92,7 +92,7 @@ public class LoginController {
         else model.addAttribute("loginFail", loginFail);
         session.setAttribute("member",member);
         if ( member.getRole().equals("ADMIN") ) {
-            return "indexAdmin";
+            return "redirect:/admin";
         } else
             return "redirect:/";
     }
@@ -104,13 +104,29 @@ public class LoginController {
     }
 
     @GetMapping("/admin")
-    public String admin(HttpSession session) {
+    public String admin(HttpSession session, Model model) {
 
         Member member = (Member) session.getAttribute("member");
         if ( member == null ) {
             return "redirect:/loginOrRegister";
         }
         if ( member.getRole().equals("ADMIN") ) {
+            model.addAttribute("memberCount", memberRepository.count());
+            model.addAttribute("roomCount", roomRepository.count());
+            model.addAttribute("bookingCount", bookingRepository.count());
+            List<Booking> bookings = bookingRepository.findAll().stream().filter(booking -> booking.getRating()!=null).toList();
+            Integer onestar = bookings.stream().filter(booking -> booking.getRating()==1).toList().size();
+            Integer twostar = bookings.stream().filter(booking -> booking.getRating()==2).toList().size();
+            Integer threestar = bookings.stream().filter(booking -> booking.getRating()==3).toList().size();
+            Integer fourstar = bookings.stream().filter(booking -> booking.getRating()==4).toList().size();
+            Integer fivestar = bookings.stream().filter(booking -> booking.getRating()==5).toList().size();
+            model.addAttribute("oneStar", onestar);
+            model.addAttribute("twoStar", twostar);
+            model.addAttribute("threeStar", threestar);
+            model.addAttribute("fourStar", fourstar);
+            model.addAttribute("fiveStar", fivestar);
+            model.addAttribute("averageStar", (onestar*1d+twostar*2d+threestar*3d+fourstar*4d+fivestar*5d)/bookingRepository.count());
+            model.addAttribute("bookings", bookings.size());
             return "indexAdmin";
         }
         return "redirect:/";

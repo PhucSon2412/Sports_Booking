@@ -22,7 +22,5 @@ public interface BookingRepository extends JpaRepository<Booking, Integer>{
     @Transactional(readOnly = true)
     List<Booking> findBooking(@Param("memberId") String memberId,@Param("dateTimeOfBooking") LocalDate dateTimeOfBooking, @Param("paymentStatus") String paymentStatus);
 
-
-
     List<Booking> findBookingsByMemberid(Member member);
 }
