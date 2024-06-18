@@ -16,6 +16,7 @@
         <ul id="nav">
             <li><a th:href="@{/}"><img th:src="@{/assets/img/sport_icon.png}" alt="Home Page" style="width:30px;height:30px; margin-top: 10px;"></a>
             </li>
+            <li><a th:href="@{/user/service}">Dịch vụ</a></li>
             <li><a th:href="@{/}">Trang chủ</a></li>
             <th:block th:if="${member == null}">
                 <li><a th:href="@{/loginOrRegister}">Đăng ký / Đăng nhập</a></li>
@@ -122,7 +123,7 @@
     </div>
     <!--Demo Footer 2-->
     <footer class="footer" style="margin-top: 150px;">
-        <div class="waves">
+        <div>
             <div class="wave" id="wave1"></div>
             <div class="wave" id="wave2"></div>
             <div class="wave" id="wave3"></div>

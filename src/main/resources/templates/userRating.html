@@ -47,15 +47,15 @@
             </tr>
         </table>
         <div>
-            <form th:action="@{/user/rating}" th:object="${booking}" method="post">
-                <select th:field="*{rating}" required>
-                    <option th:value="1" th:text="'Rất tệ'"></option>
-                    <option th:value="2" th:text="'Tệ'"></option>
-                    <option th:value="3" th:text="'Bình thường'"></option>
-                    <option th:value="4" th:text="'Tốt'"></option>
-                    <option th:value="5" th:text="'Rất tốt'"></option>
-                </select>
-                <button type="submit">Đánh giá</button>
+            <form th:action="@{/user/rating}" method="post">
+<!--                <select th:field="*{rating}" required>-->
+<!--                    <option th:value="1" th:text="'Rất tệ'"></option>-->
+<!--                    <option th:value="2" th:text="'Tệ'"></option>-->
+<!--                    <option th:value="3" th:text="'Bình thường'"></option>-->
+<!--                    <option th:value="4" th:text="'Tốt'"></option>-->
+<!--                    <option th:value="5" th:text="'Rất tốt'"></option>-->
+<!--                </select>-->
+                <button type="submit">Hoàn thành</button>
             </form>
         </div>
     </div>

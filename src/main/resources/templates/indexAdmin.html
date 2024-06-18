@@ -46,30 +46,6 @@
                     <th>Tổng số đơn:</th>
                     <td th:text="${bookingCount}"></td>
                 </tr>
-                <tr>
-                    <th>Thống kê đánh giá:</th>
-                    <td th:text="${'1 sao : ' + oneStar}"></td>
-                </tr>
-                <tr>
-                    <th></th>
-                    <td th:text="${'2 sao : ' + twoStar}"></td>
-                </tr>
-                <tr>
-                    <th></th>
-                    <td th:text="${'3 sao : ' +threeStar}"></td>
-                </tr>
-                <tr>
-                    <th></th>
-                    <td th:text="${'4 sao : '+fourStar}"></td>
-                </tr>
-                <tr>
-                    <th></th>
-                    <td th:text="${'5 sao : '+fiveStar}"></td>
-                </tr>
-                <tr>
-                    <th>Trung bình:</th>
-                    <td th:text="${#numbers.formatDecimal(averageStar, 1, 2) + ' sao trên tổng số '+ bookings+' đánh giá'}"></td>
-                </tr>
             </table>
 <!--            <p>Tổng số người dùng:</p>-->
 <!--            <p>Tổng số phòng:</p>-->

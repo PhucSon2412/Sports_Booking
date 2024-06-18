@@ -27,7 +27,7 @@ public class Room {
 
     @Override
     public String toString() {
-        return "RoomID:" + id + ", roomType=" + roomType;
+        return id;
     }
 
     public String toString2() {

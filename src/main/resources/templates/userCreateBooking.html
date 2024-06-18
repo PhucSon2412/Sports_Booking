@@ -100,6 +100,7 @@ a {
             <li><a th:href="@{/}">Trang chủ</a></li>
                 <li><a th:href="@{/user/create}">Đặt sân</a></li>
                 <li><a th:href="@{/myInfo}">Tài khoản</a></li>
+            <li><a th:href="@{/user/service}">Dịch vụ</a></li>
             </th:block>
         </ul>
         
@@ -144,6 +145,7 @@ a {
 
             <label for="checkin">Ngày thuê sân:</label>
             <input type="date" id="checkin" name="checkin" th:field="*{bookedDate}" required>
+            <p>Hãy đảm bảo rằng bạn đã đọc kĩ quy định, bảng giá và ưu đãi tại <a href="service.html"><mark>đây</mark></a> </p>
             <input type="submit" value="Xác nhận">
         </form>
     </div>

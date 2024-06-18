@@ -114,20 +114,7 @@ public class LoginController {
             model.addAttribute("memberCount", memberRepository.count());
             model.addAttribute("roomCount", roomRepository.count());
             model.addAttribute("bookingCount", bookingRepository.count());
-            List<Booking> bookings = bookingRepository.findAll().stream().filter(booking -> booking.getRating()!=null).toList();
-            Integer onestar = bookings.stream().filter(booking -> booking.getRating()==1).toList().size();
-            Integer twostar = bookings.stream().filter(booking -> booking.getRating()==2).toList().size();
-            Integer threestar = bookings.stream().filter(booking -> booking.getRating()==3).toList().size();
-            Integer fourstar = bookings.stream().filter(booking -> booking.getRating()==4).toList().size();
-            Integer fivestar = bookings.stream().filter(booking -> booking.getRating()==5).toList().size();
-            model.addAttribute("oneStar", onestar);
-            model.addAttribute("twoStar", twostar);
-            model.addAttribute("threeStar", threestar);
-            model.addAttribute("fourStar", fourstar);
-            model.addAttribute("fiveStar", fivestar);
-            model.addAttribute("averageStar", (onestar*1d+twostar*2d+threestar*3d+fourstar*4d+fivestar*5d)/bookingRepository.count());
-            model.addAttribute("bookings", bookings.size());
-            return "indexAdmin";
+            return "redirect:/admin/members";
         }
         return "redirect:/";
     }

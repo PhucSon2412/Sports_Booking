@@ -16,6 +16,7 @@
         <li><a th:href="@{/}">Trang chủ</a></li>
         <th:block th:if="${member == null}">
           <li><a th:href="@{/loginOrRegister}">Đăng ký / Đăng nhập</a></li>
+          <li><a th:href="@{/user/service}">Dịch vụ</a></li>
         </th:block>
         <th:block th:if="${member != null}">
           <li><a th:href="@{/user/create}">Đặt sân</a></li>
@@ -39,6 +40,7 @@
   <li>Khách hàng cần đặt và trả sân trong cùng ngày</li>
   <li>Việc hủy sân đã đặt là <b>miễn phí</b>.<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tuy nhiên nếu hủy <b>3 lần </b>(hoặc hơn) liên tiếp sẽ phải chịu <mark>phí phát sinh 200.000 VND</mark></li>
   <li>Khách hàng <b>không thể hủy sân</b> đã đặt trước thời điểm thuê sân 2 ngày</li>
+  <li>Khách hàng bình thường được đặt <b>tối đa 5 đơn</b> đơn</li>
 </div>
 
 <div id="Discount" class="tabcontent">
@@ -61,7 +63,7 @@
       <th>Sân tennis</th>
     </tr>
     <tr>
-      <td>2-4 giờ</td>
+      <td>1-4 giờ</td>
       <td>100.000</td>
       <td>150.000</td>
       <td>180.000</td>
@@ -88,7 +90,7 @@
         <li class="Mheader" style="background-image: url('https://img.freepik.com/premium-photo/silver-texture-high-quality_670382-120224.jpg');">Hạng Bạc</li>
         <li class="grey">-5%/hóa đơn</li>
         <li>Đạt được khi tổng số tiền đã đặt > 1,5 triệu đồng</li>
-        <li>Được đặt trước 5 đơn</li>
+        <li>Được đặt trước 10 đơn</li>
         <li></li>
       </ul>
     </div>
@@ -99,7 +101,7 @@
         <li class="grey">-8%/hóa đơn</li>
         <li>Đạt được khi tổng số tiền đã đặt > 3 triệu đồng</li>
         <li>Được hủy sân 4 lần <br>liên tiếp miễn phí</li>
-        <li>Được đặt trước 10 đơn</li>
+        <li>Được đặt trước 20 đơn</li>
       </ul>
     </div>
     

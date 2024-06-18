@@ -131,7 +131,7 @@
         <table id="notAvailableTime" class="table table-bordered">
             <tbody>
             <tr th:each="item,loop: ${notAvailableTime}">
-                <td th:text="${item.bookedTime}"></td>
+                <td th:text="'Từ ' + ${item.bookedTime} + ' đến '"></td>
                 <td th:text="${item.expiredTime}"></td>
             </tr>
             </tbody>
