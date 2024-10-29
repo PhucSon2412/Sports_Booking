@@ -1,82 +1,100 @@
 <header>
 
-# Laplace-2D-Jacobi
+# Sports Booking Project
 This is a web project submitted for the final assignment in the Database Lab (IT3290) course.
 
 </header>
 
-### 2D Electric Potential Solver
+## Members:
 
-[Spring Boot 3.3]
-[SQLServer 2022]
-[Java SE 22]
-[Maven]
+- Trần Phúc Sơn 20225666  (Back-end Developer)
+- Trần Tiến Dũng 20225614  (Front-end Developer)
+- Nguyễn Tuấn Đạt 20225605  (Back-end Developer)
+- Đặng Anh Đức 20225609  (Database Designer)
 
-Member: (Full Name & Student ID)
-- Đỗ Hoàng Minh Hiếu 20225837
-- Trịnh Minh Đạt 20225701
-- Trần Phúc Sơn 20225666
-- Hoàng Trường Giang 20225710
-- Ninh Lê Gia Bảo 20225693
-- Đặng Huy Hoàng 20225843
+## Programming languages and frameworks used in this project:
+- Front-end: [HTML] [CSS] [Thymeleaf]
+- Back-end: [Java SE 22] [Spring Boot 3.3]
+- Database: [SQLServer 2022]
+- Other: [Maven] [Postman] [Intellij IDEA]
 
-Problem & Solution:
-- The Laplace equation is a significant equation with applications across various fields in Science and Engineering. These applications are not limited to electrostatics but also extend to fluid dynamics and steady-state heat conduction. It is a second-order partial differential equation (PDE) with an elliptic nature. Solutions to the Laplace equation are often known as harmonic functions, as seen in several fields, and are particularly useful in Science and Engineering, as previously mentioned. The Laplace equation has both analytical and numerical solutions. Numerical solutions for the Laplace equation are found using various methods applicable to many linear PDEs, including the finite difference method (FDM), which is the focus of this study. The approach taken by our group to solve the Laplace equation centers around FDM. Here, we only use the numerical solutions of the Laplace equation, setting up boundary conditions for the equation, which can be derived from an existing equation of the electric potential function using the analytical method. The numerical solutions of the Laplace equation are compared with analytical solutions, showing similar results, allowing the use of common boundary conditions. The finite difference method (FDM) has been implemented through the Jacobi iterative method. This approach is taken to evaluate the efficiency of the Jacobi iterative method in calculating electric potential on a 2D plane while yielding accurate results.
+## Project's purpose:
+With the development of society, the demand for entertainment among people is increasing. One of these forms of entertainment is playing sports. Through sports, individuals can relieve stress, maintain a healthy body, reduce the risk of illness, and also enhance confidence and sleep better. With these benefits in mind, we aim to create a venue that provides sports field rental services, including various types such as archery, tennis, badminton, etc. With the advancement of information technology, we want to allow customers to book tickets online through the internet in addition to selling tickets at the venue. This is why we want to create a website where customers can book sports fields online.<br></br>
 
-Algorithm:
-- In the electric potential equation U=V, the finite difference method is used to divide the shape into a grid of points, with the number of grid points in length being a and in width being b. This gives us a×b points for which the electric potential needs to be calculated.
-  <p align="center">
-    <img src=https://github.com/user-attachments/assets/3966e88a-b240-4ff7-a099-97c31dbe9f42 alt=celebrate width=300 align=center>
-  </p>
-- Using the Taylor-Maclaurin expansion, we can derive the following approximation formula:
-  <p align="center">
-    <img src=https://github.com/user-attachments/assets/dca9ae7a-3d54-44d6-8155-29d7cda6d09d alt=celebrate width=300 align=center>
-  </p>
-- In practice, when using the finite difference method along the x-axis, the electric potential with a second-order derivative with respect to x approximates the formula:
-  <p align="center">
-    <img src=https://github.com/user-attachments/assets/db93f133-6387-4aef-81e0-48a7ba4cfc29 alt=celebrate width=300 align=center>
-  </p>
-- Similarly, for the second-order derivative with respect to y, we derive the following numerical solution formula:
-  <p align="center">
-    <img src=https://github.com/user-attachments/assets/5ba8b881-175e-4099-a177-6c4f6213a7ed alt=celebrate width=300 align=center>
-  </p>
-- In the coordinate system, we have:
-  <p align="center">
-    <img src=https://github.com/user-attachments/assets/d301ac47-80bf-4c87-ab32-637b631341ca alt=celebrate width=300 align=center>
-  </p>
-- In practice, aside from using the numerical method, we can also use the analytical method to calculate the electric potential. Essentially, the boundaries and potentials calculated at points in both methods are approximately the same.
-- In the analytical solution method, the formula u(x,y) is predefined. We know the conditions of the four boundaries of the plane to use in the code.
-  <p align="center">
-    <img src=https://github.com/user-attachments/assets/6003198c-cad7-431d-bb0f-4984c869f57c alt=celebrate width=300 align=center>
-  </p>
-- With ω = 1 we have
-  1. u(x,b) = sin(x)/sin(a)
-  2. u(a,y) = sinh(y)/sinh(b)
-  3. u(x,0) = 0
-  4. u(0,y) = 0
-- We will use these four boundaries to set boundary conditions when creating matrix U in the next code section. In the code, set the numerator of the numerical solution to 1, thus obtaining a Courant coefficient for the numerical solution as follows:
-  <p align="center">
-    <img src=https://github.com/user-attachments/assets/aba659c4-66b2-4678-a28e-3878df030d58 alt=celebrate width=300 align=center>
-  </p>
-- Next, use the Jacobi iteration method to calculate the next point. Definition: The Jacobi iteration formula is given by:
-  1. Iteration process: Initialize the starting value
-  2. Update the value
-  3. Check for convergence
+### When customers book a field, there are several regulations they need to follow:
+  1. Customers must register the booking and return time on the same day.
+  2. Cancelling a booking is free. However, depending on the user's rank, they will be fined after about 3 cancellations or more.
+  3. Customers cannot cancel a booking made within 2 days of the rental time.
 
-Result:
-- Input:
-  1. Length of Retangle
-  2. Width of Retangle
-  3. Number of grid points along the x-axis
-  4. Number of grid points along the y-axis
-  5. Error threshold
+### There are several promotions that customers can receive:
+  1. First-time customers renting a field will receive a 20% discount.
+  2. Discounts based on the number of hours rented:
+     1. Customers renting a field for 4-6 hours will receive a 7% discount.
+     2. Customers renting a field for 6 hours or more will receive a 10% discount.
+  3. Promotions based on the customer's rank:
+     1. Silver rank: Achieved when the total amount paid exceeds 1.5 million VND. These customers will receive a 5% discount and can book up to 10 slots in advance. 2
+     2. Gold rank: Achieved when the total amount paid exceeds 3 million VND. These customers will receive an 8% discount and can book up to 10 slots in advance.
+     3. Diamond rank: Achieved when the total amount paid exceeds 5 million VND. These customers will receive a 12% discount, can book an unlimited number of slots in advance, and are allowed to cancel a booking up to 1 day before the rental time.
+
+### Functions for customers:
+  1. Booking: Only registered account holders can book a field.
+  2. Cancel booking: Cancellation is allowed at the latest 2 days before for non-diamond accounts. If multiple consecutive cancellations occur, customers will be fined 200,000 VND depending on their rank.
+  3. Manage personal information: View and edit name and email.
+  4. View information on booked fields and payment.
+
+### Functions for manager:
+  1. Manage fields: View the list of fields and change rental fees.
+  2. Manage users: View the list of users, edit users' names and emails, and delete users.
+  3. Manage transactions: View the list of transactions and update the status of transactions (Unpaid, Paid, Cancelled).
+
+### ER Diagram:
   <p align="center">
-    <img src=https://github.com/user-attachments/assets/c9e68376-bd2c-433a-83e1-581378883ac2 alt=celebrate width=300 align=center>
+    <img src=https://github.com/user-attachments/assets/2fb65272-49fb-4dc3-9d1a-770de4ecc40d alt=celebrate width=100% align=center>
   </p>
 
-- Output:
-  1. Number of iterations
-  2. Final error
+### Tables of relationship:
   <p align="center">
-    <img src=https://github.com/user-attachments/assets/87a6c404-c9f1-43d5-a7ad-1a25880e9c39 alt=celebrate width=300 align=center>
+    <img src=https://github.com/user-attachments/assets/9c051389-5104-4416-b318-4441bf968d57 alt=celebrate width=100% align=center>
   </p>
+
+## Some picture of the web:
+### Customer:
+- Menu
+  <p align="center">
+    <img src=https://github.com/user-attachments/assets/aa324251-1916-4308-8571-2aa7ed4ec0ab alt=celebrate width=100% align=center>
+  </p>
+- Login Page
+  <p align="center">
+    <img src=https://github.com/user-attachments/assets/dd3855d9-8db9-4c10-a7b3-351684c95bf3 alt=celebrate width=100% align=center>
+  </p>
+- Booking Page
+  <p align="center">
+    <img src=https://github.com/user-attachments/assets/bb74e8c6-a210-4c0c-a884-405b6c9b375b alt=celebrate width=100% align=center>
+  </p>
+- Profile Page
+  <p align="center">
+    <img src=https://github.com/user-attachments/assets/68c42b22-d07a-49cc-bcb8-3d8ee7ff2f55 alt=celebrate width=100% align=center>
+  </p>
+### Admin
+- Customer Manage
+  <p align="center">
+    <img src=https://github.com/user-attachments/assets/572abc29-a886-4e79-aa93-09c6e7a59b23 alt=celebrate width=100% align=center>
+  </p>
+- Room Manage
+  <p align="center">
+    <img src=https://github.com/user-attachments/assets/02519b8f-42bb-4e9c-ae85-528ea591a14b alt=celebrate width=100% align=center>
+  </p>
+- Transaction Manage
+  <p align="center">
+    <img src=https://github.com/user-attachments/assets/da5dac53-bbce-4fc0-8f30-2e7370b1c337 alt=celebrate width=100% align=center>
+  </p>
+
+## How to run:
+
+
+
+
+
+
+
+
