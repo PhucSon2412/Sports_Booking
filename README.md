@@ -13,10 +13,20 @@ This is a web project submitted for the final assignment in the Database Lab (IT
 - Đặng Anh Đức 20225609  (Database Designer)
 
 ## Programming languages and frameworks used in this project:
-- Front-end: [HTML] [CSS] [Thymeleaf]
-- Back-end: [Java SE 22] [Spring Boot 3.3]
-- Database: [SQLServer 2022]
-- Other: [Maven] [Postman] [Intellij IDEA]
+- Front-end:
+  ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+  ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+  ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+  ![Thymeleaf](https://img.shields.io/badge/Thymeleaf-%23005C0F.svg?style=for-the-badge&logo=Thymeleaf&logoColor=white)
+- Back-end:
+  ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+  ![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
+- Database:
+  ![MicrosoftSQLServer](https://img.shields.io/badge/Microsoft%20SQL%20Server-CC2927?style=for-the-badge&logo=microsoft%20sql%20server&logoColor=white)
+- Other:
+  ![Apache Tomcat](https://img.shields.io/badge/apache%20tomcat-%23F8DC75.svg?style=for-the-badge&logo=apache-tomcat&logoColor=black)
+  ![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)
+  ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJIDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white)
 
 ## Project's purpose:
 With the development of society, the demand for entertainment among people is increasing. One of these forms of entertainment is playing sports. Through sports, individuals can relieve stress, maintain a healthy body, reduce the risk of illness, and also enhance confidence and sleep better. With these benefits in mind, we aim to create a venue that provides sports field rental services, including various types such as archery, tennis, badminton, etc. With the advancement of information technology, we want to allow customers to book tickets online through the internet in addition to selling tickets at the venue. This is why we want to create a website where customers can book sports fields online.<br></br>
@@ -90,11 +100,29 @@ With the development of society, the demand for entertainment among people is in
   </p>
 
 ## How to run:
-
-
-
-
-
-
-
-
+Install [Java](https://www.oracle.com/java/technologies/downloads/#java22), [Tomcat](https://tomcat.apache.org/download-10.cgi), [MS SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads), [Intellij IDEA](https://www.jetbrains.com/idea/download/?section=windows)<br></br>
+Setup JPA:
+  - Open **SQL Server 2022 Configuration Manager**
+  - Go to **SQL Server Netword Configuration** -> **Protocols for SQLEXPRESS**
+  - Change **TCP/IP status** to **Enable**
+  - Right click in **TCP/IP** then choose **Properties**
+  - Go to **IP Addresses**
+  - Find **IPALL**
+  - Change **TCP Port** to **1433**
+  - Open **SQL Server Management Studio 19**
+  - Right click on your computer database (DESKTOP-...) then choose **Properties**
+  - Go to **Security** tab
+  - Choose **SQL Server and Windows Authentication mode**
+  - Then click **OK**
+  - Then open **Security** folder -> open **Login** folder
+  - Right click on profile named **sa** then choose **Properties**
+  - Enter your password for this profile
+  - Then go to **Status** tab -> **Enable Login**
+  - Go back **SQL Server 2022 Configuration Manager**
+  - Go to **SQL Server Services**
+  - Right click on your database then restart it
+Run Project:
+  - Open **IntelliJ IDEA** then choose **Open project**
+  - Select the path to the project folder you downloaded
+  - Press the **Shift + F10** keys to run the project.
+  - Open your browser and go to http://localhost:8080/ to open website.
